@@ -7,17 +7,26 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import services.PersonService;
+import Eckford.services.DatabaseConnectionService;
+import Eckford.services.PersonService;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.List;
+
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Properties;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 
@@ -26,6 +35,7 @@ public class UserInterface extends JFrame {
 	private JPanel contentPane;
 	private JTextField LastNametextField;
 	private JTable table;
+	PersonService person;
 
 	/**
 	 * Launch the application.
@@ -47,11 +57,11 @@ public class UserInterface extends JFrame {
 	 * Create the frame.
 	 */
 	public UserInterface() {
-		
-		
-		//get the information from the Eckford.properties and creates a new connection
+
+		// get the information from the Eckford.properties and creates a new connection
+		DatabaseConnectionService connection = connect();
 		try {
-			
+			person = new PersonService(connection);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, "Error: " + e, "Error", JOptionPane.ERROR_MESSAGE);
 		}
@@ -85,19 +95,18 @@ public class UserInterface extends JFrame {
 
 				try {
 					String lastName = LastNametextField.getText();
-
-					// Create a list of some <object> = null;
-
+					ArrayList<String> people = null; 
 					if (lastName != null && lastName.trim().length() > 0) {
 						System.out.println(lastName);
 					} else {
-						System.out.println("empty");
+						people = person.getAllPerson(); 
 					}
-
-					// for through the list and print out the values
-
+					for(String temp: people) {
+						System.out.println(temp);
+					}
 				} catch (Exception ex) {
-					JOptionPane.showMessageDialog(UserInterface.this, "Error: " + ex, "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(UserInterface.this, "Error: " + ex, "Error",
+							JOptionPane.ERROR_MESSAGE);
 				}
 
 			}
@@ -109,6 +118,37 @@ public class UserInterface extends JFrame {
 
 		table = new JTable();
 		scrollPane.setViewportView(table);
+	}
+
+	public static DatabaseConnectionService connect() {
+		DatabaseConnectionService connection = null;
+		try {
+//			FileInputStream fis = null;
+//			Properties prop = null;
+//			try {
+//				fis = new FileInputStream("/main/Eckford.properties");
+//				prop = new Properties();
+//				prop.load(fis);
+//			} catch (FileNotFoundException fnfe) {
+//				fnfe.printStackTrace();
+//			} catch (IOException ioe) {
+//				ioe.printStackTrace();
+//			} finally {
+//				fis.close();
+//			}
+
+			connection = new DatabaseConnectionService("titan.csse.rose-hulman.edu",
+					"Eckford_Mentorship_Management_System");
+
+			if (!connection.connect("EckfordApplicationUser", "EckfordApplicationUserPass123")) {
+				System.out.println("Failure on connect");
+			}
+		} catch (Exception e) {
+			// JOptionPane.showMessageDialog(UserInterface.this, "Error: " + e, "Error",
+			// JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+		return connection;
 	}
 
 }

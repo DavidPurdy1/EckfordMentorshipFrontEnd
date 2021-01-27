@@ -1,4 +1,4 @@
-package services;
+package Eckford.services;
 
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
@@ -45,11 +45,11 @@ public class PersonService {
 	
 	public ArrayList<String> getAllPerson() {
 		ArrayList<String> people = new ArrayList<String>();
-		String query = "SELECT Name from Person";
+		String query = "SELECT FName from Person";
 		try (Statement stmt = dbService.getConnection().createStatement()) {
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
-				people.add(rs.getString("Name"));
+				people.add(rs.getString("FName"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
