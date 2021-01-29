@@ -18,20 +18,20 @@ public class PersonService {
 		this.dbService = dbService;
 	}
 
+	//add handling for address
 	public boolean addPerson(Person p) {
-		System.out.println("METHOD NOT FINISHED IMPLEMENTED");
 		CallableStatement cs = null;
 		try {
-			cs = this.dbService.getConnection().prepareCall("{? = call insert_person(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
-			cs.setString(2, p.Fname);
-			cs.setString(3, p.Lname);
-			cs.setString(4, p.PhoneNumber);
-			cs.setString(5, p.Email);
-			cs.setString(6, p.Lname);
-			cs.setString(7, p.Lname);
-			cs.setString(8, p.Lname);
-			cs.setString(9, p.Lname);
-			cs.setString(10, p.Lname);
+			cs = this.dbService.getConnection().prepareCall("{? = call insert_person(?, ?, ?, ?, ?, ?, ?, ?, ?)}");
+			cs.setString(2, p.PhoneNumber);
+			cs.setString(3, p.LGBT);
+			cs.setString(4, p.Fname);
+			cs.setString(5, p.Lname);
+			cs.setString(6, p.Email);
+			cs.setString(7, p.Race);
+			cs.setString(8, p.Nationality);
+			cs.setString(9, p.Sex);
+			cs.setString(10, p.Ethnicity);
 			cs.registerOutParameter(1, Types.INTEGER);
 			cs.execute();
 			int result = cs.getInt(1);

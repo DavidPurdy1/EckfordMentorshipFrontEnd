@@ -101,8 +101,7 @@ public class UserInterface extends JFrame {
 					} else {
 						people = pService.getAllPerson();
 					}
-					PersonTableModel personModel = new PersonTableModel(people);
-					table.setModel(personModel);
+					table.setModel(new PersonTableModel(people));
 
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(UserInterface.this, "Error: " + ex, "Error",
@@ -118,6 +117,7 @@ public class UserInterface extends JFrame {
 
 		table = new JTable();
 		scrollPane.setViewportView(table);
+		table.setModel(new PersonTableModel(pService.getAllPerson()));
 
 		JPanel buttonPanel = new JPanel();
 		contentPane.add(buttonPanel, BorderLayout.SOUTH);
@@ -138,7 +138,7 @@ public class UserInterface extends JFrame {
 //			FileInputStream fis = null;
 //			Properties prop = null;
 //			try {
-//				fis = new FileInputStream("/main/Eckford.properties");
+//				fis = new FileInputStream("Eckford.properties");
 //				prop = new Properties();
 //				prop.load(fis);
 //			} catch (FileNotFoundException fnfe) {

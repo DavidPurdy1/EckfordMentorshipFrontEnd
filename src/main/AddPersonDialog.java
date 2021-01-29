@@ -14,6 +14,8 @@ import Eckford.services.PersonService;
 
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagConstraints;
 import java.awt.Font;
 import javax.swing.JTextField;
@@ -35,9 +37,6 @@ public class AddPersonDialog extends JDialog {
 	private JTextField LGBTField;
 	private JTextField SexField;
 
-	/**
-	 * Launch the application.
-	 */
 //	public static void main(String[] args) {
 //		try {
 //			AddPersonDialog dialog = new AddPersonDialog();
@@ -51,9 +50,10 @@ public class AddPersonDialog extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	private DatabaseConnectionService dbService; 
+	private DatabaseConnectionService dbService;
+
 	public AddPersonDialog(DatabaseConnectionService dbService) {
-		this.dbService = dbService; 
+		this.dbService = dbService;
 		setTitle("Add Person");
 		setBounds(100, 100, 392, 414);
 		getContentPane().setLayout(new BorderLayout());
@@ -289,7 +289,7 @@ public class AddPersonDialog extends JDialog {
 							setVisible(false);
 							dispose();
 						} catch (Exception ex) {
-
+							ex.printStackTrace();
 						}
 					}
 				});
@@ -312,9 +312,15 @@ public class AddPersonDialog extends JDialog {
 		p.Sex = SexField.getText();
 		p.LGBT = LGBTField.getText();
 
+		// TODO: Add more checks for invalid input
 		try {
-			PersonService pService = new PersonService(dbService); 
-			pService.addPerson(p); 
+			PersonService pService = new PersonService(dbService);
+			if (p.Fname.trim().length() > 0 && p.Lname.trim().length() > 0) {
+				pService.addPerson(p);
+			} else {
+				JOptionPane.showMessageDialog(AddPersonDialog.this, "Did not enter in first name or last name", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
 			setVisible(false);
 			dispose();
 		} catch (Exception e) {
