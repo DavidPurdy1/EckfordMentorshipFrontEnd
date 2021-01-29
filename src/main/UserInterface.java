@@ -8,15 +8,15 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Eckford.services.DatabaseConnectionService;
+import Eckford.services.Person;
 import Eckford.services.PersonService;
+import Eckford.services.PersonTableModel;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.List;
-
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -35,7 +35,8 @@ public class UserInterface extends JFrame {
 	private JPanel contentPane;
 	private JTextField LastNametextField;
 	private JTable table;
-	PersonService person;
+	PersonService pService;
+	Person p;
 
 	/**
 	 * Launch the application.
@@ -61,7 +62,7 @@ public class UserInterface extends JFrame {
 		// get the information from the Eckford.properties and creates a new connection
 		DatabaseConnectionService connection = connect();
 		try {
-			person = new PersonService(connection);
+			pService = new PersonService(connection);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, "Error: " + e, "Error", JOptionPane.ERROR_MESSAGE);
 		}
@@ -92,18 +93,17 @@ public class UserInterface extends JFrame {
 
 			// This is for searching for items in the table
 			public void actionPerformed(ActionEvent e) {
-
 				try {
 					String lastName = LastNametextField.getText();
-					ArrayList<String> people = null; 
+					ArrayList<Person> people = null;
 					if (lastName != null && lastName.trim().length() > 0) {
-						System.out.println(lastName);
+						people = pService.searchPerson(lastName);
 					} else {
-						people = person.getAllPerson(); 
+						people = pService.getAllPerson();
 					}
-					for(String temp: people) {
-						System.out.println(temp);
-					}
+					PersonTableModel personModel = new PersonTableModel(people);
+					table.setModel(personModel);
+
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(UserInterface.this, "Error: " + ex, "Error",
 							JOptionPane.ERROR_MESSAGE);
@@ -118,6 +118,18 @@ public class UserInterface extends JFrame {
 
 		table = new JTable();
 		scrollPane.setViewportView(table);
+
+		JPanel buttonPanel = new JPanel();
+		contentPane.add(buttonPanel, BorderLayout.SOUTH);
+
+		JButton AddPersonButton = new JButton("Add Person");
+		AddPersonButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AddPersonDialog addPerson = new AddPersonDialog(connection);
+				addPerson.setVisible(true);
+			}
+		});
+		buttonPanel.add(AddPersonButton);
 	}
 
 	public static DatabaseConnectionService connect() {
