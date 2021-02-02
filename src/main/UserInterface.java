@@ -8,9 +8,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Eckford.services.DatabaseConnectionService;
-import Eckford.services.Person;
 import Eckford.services.PersonService;
-import Eckford.services.PersonTableModel;
+import Tables.Person;
+import Tables.PersonTableModel;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -38,31 +38,28 @@ public class UserInterface extends JFrame {
 	PersonService pService;
 	Person p;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					UserInterface frame = new UserInterface();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	/**
+//	 * Launch the application.
+//	 */
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					UserInterface frame = new UserInterface();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
-	public UserInterface() {
-
-		// get the information from the Eckford.properties and creates a new connection
-		DatabaseConnectionService connection = connect();
+	public UserInterface(DatabaseConnectionService dbService) {
 		try {
-			pService = new PersonService(connection);
+			pService = new PersonService(dbService);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, "Error: " + e, "Error", JOptionPane.ERROR_MESSAGE);
 		}
@@ -125,42 +122,10 @@ public class UserInterface extends JFrame {
 		JButton AddPersonButton = new JButton("Add Person");
 		AddPersonButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AddPersonDialog addPerson = new AddPersonDialog(connection);
+				AddPersonDialog addPerson = new AddPersonDialog(dbService);
 				addPerson.setVisible(true);
 			}
 		});
 		buttonPanel.add(AddPersonButton);
 	}
-
-	public static DatabaseConnectionService connect() {
-		DatabaseConnectionService connection = null;
-		try {
-//			FileInputStream fis = null;
-//			Properties prop = null;
-//			try {
-//				fis = new FileInputStream("Eckford.properties");
-//				prop = new Properties();
-//				prop.load(fis);
-//			} catch (FileNotFoundException fnfe) {
-//				fnfe.printStackTrace();
-//			} catch (IOException ioe) {
-//				ioe.printStackTrace();
-//			} finally {
-//				fis.close();
-//			}
-
-			connection = new DatabaseConnectionService("titan.csse.rose-hulman.edu",
-					"Eckford_Mentorship_Management_System");
-
-			if (!connection.connect("EckfordApplicationUser", "EckfordApplicationUserPass123")) {
-				System.out.println("Failure on connect");
-			}
-		} catch (Exception e) {
-			// JOptionPane.showMessageDialog(UserInterface.this, "Error: " + e, "Error",
-			// JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
-		}
-		return connection;
-	}
-
 }

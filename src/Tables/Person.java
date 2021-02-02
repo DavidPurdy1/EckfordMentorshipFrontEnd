@@ -1,4 +1,4 @@
-package Eckford.services;
+package Tables;
 
 //container class
 public class Person {

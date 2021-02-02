@@ -10,6 +10,8 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import Tables.Person;
+
 public class PersonService {
 
 	private DatabaseConnectionService dbService;

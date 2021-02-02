@@ -9,8 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Eckford.services.DatabaseConnectionService;
-import Eckford.services.Person;
 import Eckford.services.PersonService;
+import Tables.Person;
 
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
