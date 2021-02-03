@@ -1,8 +1,6 @@
 package main;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -21,12 +19,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Properties;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 

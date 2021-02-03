@@ -1,6 +1,10 @@
 package main;
 
 import java.awt.EventQueue;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
 
 import Eckford.services.DatabaseConnectionService;
 
@@ -10,7 +14,7 @@ public class Main {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DatabaseConnectionService dbService = connect(); 
+					DatabaseConnectionService dbService = connect();
 					UserLogin frame = new UserLogin(dbService);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -23,24 +27,24 @@ public class Main {
 	public static DatabaseConnectionService connect() {
 		DatabaseConnectionService connection = null;
 		try {
-//			FileInputStream fis = null;
-//			Properties prop = null;
-//			try {
-//				fis = new FileInputStream("Eckford.properties");
-//				prop = new Properties();
-//				prop.load(fis);
-//			} catch (FileNotFoundException fnfe) {
-//				fnfe.printStackTrace();
-//			} catch (IOException ioe) {
-//				ioe.printStackTrace();
-//			} finally {
-//				fis.close();
-//			}
+			FileInputStream fis = null;
+			Properties prop = null;
+			try {
+				fis = new FileInputStream("Eckford.properties");
+				prop = new Properties();
+				prop.load(fis);
+			} catch (FileNotFoundException fnfe) {
+				fnfe.printStackTrace();
+			} catch (IOException ioe) {
+				ioe.printStackTrace();
+			} finally {
+				fis.close();
+			}
 
-			connection = new DatabaseConnectionService("titan.csse.rose-hulman.edu",
-					"Eckford_Mentorship_Management_System");
+			connection = new DatabaseConnectionService(prop.getProperty("databaseName"),
+					prop.getProperty("serverName"));
 
-			if (!connection.connect("EckfordApplicationUser", "EckfordApplicationUserPass123")) {
+			if (!connection.connect(prop.getProperty("serverName"), prop.getProperty("serverPassword"))) {
 				System.out.println("Failure on connect");
 			}
 		} catch (Exception e) {

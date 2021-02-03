@@ -109,16 +109,17 @@ public class UserLogin extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				// TODO: add verification service
-				String user= UserNameField.getText();
+				String user = UserNameField.getText();
 				String pass = PasswordField.getText();
-				if (user != null && user.trim().length() > 0 && pass != null && pass.trim().length() > 0)
-					loginService.login(user, pass);
-				
-				
-				UserInterface ui = new UserInterface(dbService);
-				ui.setVisible(true);
-				setVisible(false);
-				dispose();
+				if (user != null && user.trim().length() > 0 && pass != null && pass.trim().length() > 0) {
+					if (loginService.login(user, pass)) {
+						UserInterface ui = new UserInterface(dbService);
+						ui.setVisible(true);
+						setVisible(false);
+						dispose();
+					}
+				} else
+					JOptionPane.showMessageDialog(null, "User or Password cannot be blank");
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -131,8 +132,15 @@ public class UserLogin extends JFrame {
 		JButton btnNewButton_1 = new JButton("Register");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				String user = UserNameField.getText();
+				String pass = PasswordField.getText();
 				// TODO: Add registration
+				if (user != null && user.trim().length() > 0 && pass != null && pass.trim().length() > 0) {
+					if (loginService.register(user, pass)) {
+						// TODO: add success
+					}
+				}else
+					JOptionPane.showMessageDialog(null, "User or Password cannot be blank");
 			}
 		});
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
