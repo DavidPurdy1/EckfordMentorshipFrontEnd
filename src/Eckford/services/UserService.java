@@ -55,17 +55,17 @@ public class UserService {
 		return false;
 	}
 
-	public boolean register(String username, String password) {
+	public boolean register(String username, String password, String role) {
 		byte[] salt = getNewSalt();
 		String hash = hashPassword(salt, password);
 		CallableStatement cs = null;
 		try {
-			cs = this.dbService.getConnection().prepareCall("{? = call Register(?, ?, ?)}");
+			cs = this.dbService.getConnection().prepareCall("{? = call Register(?, ?, ?, ?)}");
 			cs.registerOutParameter(1, Types.INTEGER);
 			cs.setString(2, username);
 			cs.setBytes(3, salt);
 			cs.setString(4, hash);
-			cs.setString(2, username);
+			cs.setString(5, role);
 			cs.execute();
 			if (cs.getInt(1) != 0) {
 				JOptionPane.showMessageDialog(null, "Registration Failed");
