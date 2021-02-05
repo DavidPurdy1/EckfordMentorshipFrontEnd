@@ -6,8 +6,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Eckford.services.DatabaseConnectionService;
+import Eckford.services.MenteeAndMentorService;
 import Eckford.services.PersonService;
 import Eckford.services.PreferenceService;
+import Tables.MatchTableModel;
 import Tables.Person;
 import Tables.PersonTableModel;
 
@@ -79,6 +81,7 @@ public class MenteeInterface extends JFrame {
 					JOptionPane.showMessageDialog(MenteeInterface.this, "Error: " + ex, "Error",
 							JOptionPane.ERROR_MESSAGE);
 				}
+				
 
 			}
 		});
@@ -89,7 +92,7 @@ public class MenteeInterface extends JFrame {
 
 		table = new JTable();
 		scrollPane.setViewportView(table);
-		table.setModel(new PersonTableModel(pService.getAllPerson()));
+		table.setModel(new MatchTableModel(new PreferenceService(dbService).findMatches()));
 
 		JPanel buttonPanel = new JPanel();
 		contentPane.add(buttonPanel, BorderLayout.SOUTH);

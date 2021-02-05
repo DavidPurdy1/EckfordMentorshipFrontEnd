@@ -52,6 +52,9 @@ public class AddPersonDialog extends JDialog {
 	 * Create the dialog.
 	 */
 	private DatabaseConnectionService dbService;
+	private JTextField posField;
+	private JTextField senField;
+	private JTextField FieldField;
 
 	public AddPersonDialog(DatabaseConnectionService dbService, boolean isMentor) {
 		this.dbService = dbService;
@@ -62,9 +65,9 @@ public class AddPersonDialog extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[] { 105, 0, 0 };
-		gbl_contentPanel.rowHeights = new int[] { 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		gbl_contentPanel.rowHeights = new int[] { 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 		gbl_contentPanel.columnWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
-		gbl_contentPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+		gbl_contentPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 				Double.MIN_VALUE };
 		contentPanel.setLayout(gbl_contentPanel);
 		{
@@ -252,7 +255,7 @@ public class AddPersonDialog extends JDialog {
 			SexLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			GridBagConstraints gbc_SexLabel = new GridBagConstraints();
 			gbc_SexLabel.anchor = GridBagConstraints.EAST;
-			gbc_SexLabel.insets = new Insets(0, 0, 0, 5);
+			gbc_SexLabel.insets = new Insets(0, 0, 5, 5);
 			gbc_SexLabel.gridx = 0;
 			gbc_SexLabel.gridy = 9;
 			contentPanel.add(SexLabel, gbc_SexLabel);
@@ -260,11 +263,71 @@ public class AddPersonDialog extends JDialog {
 		{
 			SexField = new JTextField();
 			GridBagConstraints gbc_SexField = new GridBagConstraints();
+			gbc_SexField.insets = new Insets(0, 0, 5, 0);
 			gbc_SexField.fill = GridBagConstraints.HORIZONTAL;
 			gbc_SexField.gridx = 1;
 			gbc_SexField.gridy = 9;
 			contentPanel.add(SexField, gbc_SexField);
 			SexField.setColumns(10);
+		}
+		{
+			JLabel posLabel = new JLabel("Position");
+			posLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			GridBagConstraints gbc_posLabel = new GridBagConstraints();
+			gbc_posLabel.anchor = GridBagConstraints.EAST;
+			gbc_posLabel.insets = new Insets(0, 0, 5, 5);
+			gbc_posLabel.gridx = 0;
+			gbc_posLabel.gridy = 10;
+			contentPanel.add(posLabel, gbc_posLabel);
+		}
+		{
+			posField = new JTextField();
+			GridBagConstraints gbc_posField = new GridBagConstraints();
+			gbc_posField.insets = new Insets(0, 0, 5, 0);
+			gbc_posField.fill = GridBagConstraints.HORIZONTAL;
+			gbc_posField.gridx = 1;
+			gbc_posField.gridy = 10;
+			contentPanel.add(posField, gbc_posField);
+			posField.setColumns(10);
+		}
+		{
+			JLabel senLabel = new JLabel("Seniority");
+			senLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			GridBagConstraints gbc_senLabel = new GridBagConstraints();
+			gbc_senLabel.anchor = GridBagConstraints.EAST;
+			gbc_senLabel.insets = new Insets(0, 0, 5, 5);
+			gbc_senLabel.gridx = 0;
+			gbc_senLabel.gridy = 11;
+			contentPanel.add(senLabel, gbc_senLabel);
+		}
+		{
+			senField = new JTextField();
+			GridBagConstraints gbc_senField = new GridBagConstraints();
+			gbc_senField.insets = new Insets(0, 0, 5, 0);
+			gbc_senField.fill = GridBagConstraints.HORIZONTAL;
+			gbc_senField.gridx = 1;
+			gbc_senField.gridy = 11;
+			contentPanel.add(senField, gbc_senField);
+			senField.setColumns(10);
+		}
+		{
+			JLabel FieldLabel = new JLabel("Field");
+			FieldLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			GridBagConstraints gbc_FieldLabel = new GridBagConstraints();
+			gbc_FieldLabel.anchor = GridBagConstraints.EAST;
+			gbc_FieldLabel.insets = new Insets(0, 0, 0, 5);
+			gbc_FieldLabel.gridx = 0;
+			gbc_FieldLabel.gridy = 12;
+			contentPanel.add(FieldLabel, gbc_FieldLabel);
+		}
+		{
+			FieldField = new JTextField();
+			GridBagConstraints gbc_FieldField = new GridBagConstraints();
+			gbc_FieldField.fill = GridBagConstraints.HORIZONTAL;
+			gbc_FieldField.gridx = 1;
+			gbc_FieldField.gridy = 12;
+			contentPanel.add(FieldField, gbc_FieldField);
+			FieldField.setColumns(10);
 		}
 		{
 			JPanel buttonPane = new JPanel();
@@ -312,15 +375,16 @@ public class AddPersonDialog extends JDialog {
 		p.Ethnicity = EthnicityField.getText();
 		p.Sex = SexField.getText();
 		p.LGBT = LGBTField.getText();
+		
 
 		// TODO: Add more checks for invalid input
 		try {
-			PersonService pService = new PersonService(dbService);
+
 			if (p.Fname.trim().length() > 0 && p.Lname.trim().length() > 0) {
 				
 				MenteeAndMentorService mmService = new MenteeAndMentorService(dbService); 
 				if(isMentor) {
-					mmService.addMentor(); 
+					mmService.addMentor(p, Integer.parseInt(senField.getText()), posField.getText(), FieldField.getText()); 
 				}else {
 					mmService.addMentee(p);
 				}
