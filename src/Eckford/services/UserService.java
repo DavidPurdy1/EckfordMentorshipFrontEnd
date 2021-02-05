@@ -32,7 +32,7 @@ public class UserService {
 	}
 
 	public boolean login(String username, String password) {
-		String query = "Select PasswordSalt, PasswordHash, [Role] from [User] where Email = ?";
+		String query = "Select PasswordSalt, PasswordHash from [User] where Email = ?";
 		try {
 			// returns the salt and hash from the user table
 			PreparedStatement stmt = this.dbService.getConnection().prepareCall(query);
@@ -78,7 +78,28 @@ public class UserService {
 		}
 		return false;
 	}
-
+	
+	public String getRole(String user) {
+		String query = "Select [Role] from [User] where Email = ?";
+		try {
+			// returns the salt and hash from the user table
+			PreparedStatement stmt = this.dbService.getConnection().prepareCall(query);
+			stmt.setString(1, user);
+			ResultSet rs = stmt.executeQuery();
+			this.dbService.getConnection().commit();
+			// checks if hashing the password entered using the salt retrieved equals the
+			// hash retrieved
+			if (rs.next()) {
+				return rs.getString("Role"); 
+			}
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "Finding the role failed");
+			e.printStackTrace();
+		}
+		
+		return null; 
+	}
+	
 	public byte[] getNewSalt() {
 		byte[] salt = new byte[16];
 		RANDOM.nextBytes(salt);
@@ -108,3 +129,4 @@ public class UserService {
 	}
 
 }
+

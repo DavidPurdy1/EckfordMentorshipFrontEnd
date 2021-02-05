@@ -1,8 +1,20 @@
 package main;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import Eckford.services.DatabaseConnectionService;
@@ -10,20 +22,7 @@ import Eckford.services.PersonService;
 import Tables.Person;
 import Tables.PersonTableModel;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.FlowLayout;
-import java.awt.Font;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.awt.event.ActionEvent;
-import javax.swing.JScrollPane;
-
-public class UserInterface extends JFrame {
+public class MentorInterface extends JFrame{
 
 	private JPanel contentPane;
 	private JTextField LastNametextField;
@@ -31,33 +30,15 @@ public class UserInterface extends JFrame {
 	PersonService pService;
 	Person p;
 
-//	/**
-//	 * Launch the application.
-//	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					UserInterface frame = new UserInterface();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
-
-	/**
-	 * Create the frame.
-	 */
-	public UserInterface(DatabaseConnectionService dbService) {
+	public MentorInterface(DatabaseConnectionService dbService) {
+		
 		try {
 			pService = new PersonService(dbService);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, "Error: " + e, "Error", JOptionPane.ERROR_MESSAGE);
 		}
 
-		setTitle("User Interface");
+		setTitle("Mentor Interface");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 725, 455);
 		contentPane = new JPanel();
@@ -94,7 +75,7 @@ public class UserInterface extends JFrame {
 					table.setModel(new PersonTableModel(people));
 
 				} catch (Exception ex) {
-					JOptionPane.showMessageDialog(UserInterface.this, "Error: " + ex, "Error",
+					JOptionPane.showMessageDialog(MentorInterface.this, "Error: " + ex, "Error",
 							JOptionPane.ERROR_MESSAGE);
 				}
 
@@ -119,15 +100,17 @@ public class UserInterface extends JFrame {
 				addPerson.setVisible(true);
 			}
 		});
-		
+
 		JButton AddPreference = new JButton("Add Preference");
 		AddPreference.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PreferenceDialog pd = new PreferenceDialog(dbService); 
+				PreferenceDialog pd = new PreferenceDialog(dbService);
 				pd.setVisible(true);
 			}
 		});
 		buttonPanel.add(AddPreference);
 		buttonPanel.add(AddPersonButton);
+
 	}
+
 }

@@ -7,7 +7,7 @@ public class Preference {
 	public String Position;
 	public String City;
 	public String State;
-	public String Seniority;
+	public Integer Seniority;
 	public String Nationality; 
 	public String Ethnicity; 
 }

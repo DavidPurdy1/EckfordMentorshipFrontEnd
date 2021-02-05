@@ -29,22 +29,8 @@ public class UserLogin extends JFrame {
 	private JTextField UserNameField;
 	private JTextField PasswordField;
 	private UserService loginService;
-//	/**
-//	 * Launch the application.
-//	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					UserLogin frame = new UserLogin();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
-
+	
+	
 	/**
 	 * Create the frame.
 	 */
@@ -109,13 +95,22 @@ public class UserLogin extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				// TODO: add verification service
 				String user = UserNameField.getText();
 				String pass = PasswordField.getText();
+				
+				//Verify that is a valid password and username in the database
 				if (user != null && user.trim().length() > 0 && pass != null && pass.trim().length() > 0) {
 					if (loginService.login(user, pass)) {
-						UserInterface ui = new UserInterface(dbService);
-						ui.setVisible(true);
+						dbService.userEmail = user;
+						if(loginService.getRole(user).equals("Mentor")) {
+							//Launch Mentor UI 
+							MentorInterface ui = new MentorInterface(dbService); 
+							ui.setVisible(true);
+						}else {
+							//Launch Mentee Ui
+							MenteeInterface ui = new MenteeInterface(dbService);
+							ui.setVisible(true);
+						}
 						setVisible(false);
 						dispose();
 					}
@@ -147,12 +142,14 @@ public class UserLogin extends JFrame {
 				String pass = PasswordField.getText();
 				String mentorOrMentee = null;
 
-				// TODO: Add registration
+				//check whether or not it is a mentor or mentee
 				if (chckbxNewCheckBox.isSelected()) {
 					mentorOrMentee = "Mentor";
 				} else {
 					mentorOrMentee = "Mentee";
 				}
+				
+				//Runs register stored procedure
 				if (user != null && user.trim().length() > 0 && pass != null && pass.trim().length() > 0) {
 					if (loginService.register(user, pass, mentorOrMentee)) {
 						JOptionPane.showMessageDialog(null, "Registration Successful !");

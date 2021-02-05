@@ -9,7 +9,8 @@ public class DatabaseConnectionService {
 		private final String SampleURL = "jdbc:sqlserver://${dbServer};databaseName=${dbName};user=${user};password= {${pass}}";
 
 		private Connection connection = null;
-
+		//TODO: Change this later
+		public String userEmail; 
 		private String databaseName;
 		private String serverName;
 

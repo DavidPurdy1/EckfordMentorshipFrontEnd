@@ -24,9 +24,10 @@ import java.awt.event.ActionEvent;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 
 public class PreferenceDialog extends JDialog {
-	private DatabaseConnectionService dbService; 
+	private DatabaseConnectionService dbService;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField CityField;
 	private JTextField RaceField;
@@ -255,33 +256,39 @@ public class PreferenceDialog extends JDialog {
 				JButton saveButton = new JButton("Save");
 				saveButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-					
-						
+
 						Preference p = new Preference();
 						p.City = CityField.getText();
-						p.Nationality = NationalityField.getText(); 
-						p.Ethnicity = EthnicityField.getText(); 
-						p.Field = FieldField.getText(); 
-						p.LGBT = LGBTField.getText(); 
-						p.Seniority = SeniorityField.getText();
-						p.Sex = SexField.getText(); 
+						p.Nationality = NationalityField.getText();
+						p.Ethnicity = EthnicityField.getText();
+						p.Field = FieldField.getText();
+						p.LGBT = LGBTField.getText();
+						p.Seniority = Integer.parseInt(SeniorityField.getText());
+						p.Sex = SexField.getText();
 						p.State = StateField.getText();
-						 
-						PreferenceService prefService = new PreferenceService(dbService); 
-						prefService.addPreference(p); 
+
+						// TODO: Fix this in the table and the preference dialog. Kinda a silly thing to
+						// put in the preference form
+						p.Position = "N/A";
 						
-						MenteeAndMentorService mmService = new MenteeAndMentorService(dbService); 
-						//TODO: Find match add get an email to then add to the mentee; 
+						//TODO: Change how the mentee service works so you have to enter in a preference and then 
+						PreferenceService prefService = new PreferenceService(dbService);
+						prefService.addPreference(p);
+						JOptionPane.showMessageDialog(null, "Preference entered successfully");
+
+						MenteeAndMentorService mmService = new MenteeAndMentorService(dbService);
+						// TODO: Find match for a mentee,
+						// once they are matched use its email to add in a mentee entry
 						
-						//TODO: HOW DO I GET EMAIL TF 
+						// TODO: HOW DO I GET EMAIL TF
 //						ArrayList<Match> match = prefService.match(); 
 //						
 //						for(Match m : match) {
 //							// m.Email
 //						}
-						//TODO: Add to the mentee table
-						
-						mmService.addMentee(); 
+						// TODO: Add to the mentee table
+
+						mmService.addMentee();
 					}
 				});
 				saveButton.setFont(new Font("Tahoma", Font.PLAIN, 10));
