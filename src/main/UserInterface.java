@@ -119,6 +119,15 @@ public class UserInterface extends JFrame {
 				addPerson.setVisible(true);
 			}
 		});
+		
+		JButton AddPreference = new JButton("Add Preference");
+		AddPreference.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PreferenceDialog pd = new PreferenceDialog(dbService); 
+				pd.setVisible(true);
+			}
+		});
+		buttonPanel.add(AddPreference);
 		buttonPanel.add(AddPersonButton);
 	}
 }

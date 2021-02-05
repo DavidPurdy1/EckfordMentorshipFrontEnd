@@ -4,7 +4,6 @@ package Tables;
 public class Person {
 	public String Fname;
 	public String Lname;
-	public String ID;
 	public String PhoneNumber;
 	public String Email;
 	public String AddressID;

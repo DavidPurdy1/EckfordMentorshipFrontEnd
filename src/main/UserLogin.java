@@ -21,6 +21,7 @@ import java.awt.Insets;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JCheckBox;
 
 public class UserLogin extends JFrame {
 
@@ -68,7 +69,7 @@ public class UserLogin extends JFrame {
 		gbl_contentPane.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		contentPane.setLayout(gbl_contentPane);
 
-		JLabel UserNameLabel = new JLabel("User Name");
+		JLabel UserNameLabel = new JLabel("Email");
 		UserNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		GridBagConstraints gbc_UserNameLabel = new GridBagConstraints();
 		gbc_UserNameLabel.insets = new Insets(0, 0, 5, 5);
@@ -122,6 +123,16 @@ public class UserLogin extends JFrame {
 					JOptionPane.showMessageDialog(null, "User or Password cannot be blank");
 			}
 		});
+
+		JCheckBox chckbxNewCheckBox = new JCheckBox("Registering as a mentor?");
+		chckbxNewCheckBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		GridBagConstraints gbc_chckbxNewCheckBox = new GridBagConstraints();
+		gbc_chckbxNewCheckBox.gridwidth = 2;
+		gbc_chckbxNewCheckBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_chckbxNewCheckBox.insets = new Insets(0, 0, 5, 5);
+		gbc_chckbxNewCheckBox.gridx = 2;
+		gbc_chckbxNewCheckBox.gridy = 5;
+		contentPane.add(chckbxNewCheckBox, gbc_chckbxNewCheckBox);
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
@@ -134,12 +145,19 @@ public class UserLogin extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String user = UserNameField.getText();
 				String pass = PasswordField.getText();
+				String mentorOrMentee = null;
+
 				// TODO: Add registration
+				if (chckbxNewCheckBox.isSelected()) {
+					mentorOrMentee = "Mentor";
+				} else {
+					mentorOrMentee = "Mentee";
+				}
 				if (user != null && user.trim().length() > 0 && pass != null && pass.trim().length() > 0) {
-					if (loginService.register(user, pass)) {
-						// TODO: add success
+					if (loginService.register(user, pass, mentorOrMentee)) {
+						JOptionPane.showMessageDialog(null, "Registration Successful !");
 					}
-				}else
+				} else
 					JOptionPane.showMessageDialog(null, "User or Password cannot be blank");
 			}
 		});

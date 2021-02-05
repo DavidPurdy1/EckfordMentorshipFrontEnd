@@ -32,7 +32,7 @@ public class UserService {
 	}
 
 	public boolean login(String username, String password) {
-		String query = "Select PasswordSalt, PasswordHash from [User] where Username = ?";
+		String query = "Select PasswordSalt, PasswordHash, [Role] from [User] where Email = ?";
 		try {
 			// returns the salt and hash from the user table
 			PreparedStatement stmt = this.dbService.getConnection().prepareCall(query);
@@ -67,6 +67,7 @@ public class UserService {
 			cs.setString(4, hash);
 			cs.setString(5, role);
 			cs.execute();
+			//TODO: Add something for more error messages 	
 			if (cs.getInt(1) != 0) {
 				JOptionPane.showMessageDialog(null, "Registration Failed");
 				return false;

@@ -65,7 +65,6 @@ public class PersonService {
 				Person p = new Person();
 				p.Fname = rs.getString("Fname");
 				p.Lname = rs.getString("Lname");
-				p.ID = rs.getString("ID");
 				p.PhoneNumber = rs.getString("PhoneNumber");
 				p.Email = rs.getString("Email");
 				p.Nationality = rs.getString("Nationality");
@@ -91,7 +90,6 @@ public class PersonService {
 				Person p = new Person();
 				p.Fname = rs.getString("Fname");
 				p.Lname = rs.getString("Lname");
-				p.ID = rs.getString("ID");
 				p.PhoneNumber = rs.getString("PhoneNumber");
 				p.Email = rs.getString("Email");
 				p.Nationality = rs.getString("Nationality");

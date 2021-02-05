@@ -8,7 +8,7 @@ public class PersonTableModel extends AbstractTableModel {
 
 	private Person p;
 	private ArrayList<Person> people;
-	private String[] columns = { "ID", "FName", "LName", "PhoneNumber", "LGBT", "Email", "AddressID", "Race",
+	private String[] columns = {"FName", "LName", "PhoneNumber", "LGBT", "Email", "AddressID", "Race",
 			"Nationality", "Sex", "Ethnicity" };
 
 	public PersonTableModel(ArrayList<Person> people) {
@@ -35,26 +35,24 @@ public class PersonTableModel extends AbstractTableModel {
 		p = people.get(rowIndex);
 		switch (columnIndex) {
 		case 0:
-			return p.ID;
-		case 1:
 			return p.Fname;
-		case 2:
+		case 1:
 			return p.Lname;
-		case 3:
+		case 2:
 			return p.PhoneNumber;
-		case 4:
+		case 3:
 			return p.LGBT;
-		case 5:
+		case 4:
 			return p.Email;
-		case 6:
+		case 5:
 			return p.AddressID;
-		case 7:
+		case 6:
 			return p.Race;
-		case 8:
+		case 7:
 			return p.Nationality;
-		case 9:
+		case 8:
 			return p.Sex;
-		case 10:
+		case 9:
 			return p.Ethnicity;
 		}
 		return null;
