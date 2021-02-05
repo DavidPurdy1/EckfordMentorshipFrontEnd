@@ -20,7 +20,7 @@ public class PersonService {
 		this.dbService = dbService;
 	}
 
-	//add handling for address
+	//TODO add handling for address
 	public boolean addPerson(Person p) {
 		CallableStatement cs = null;
 		try {
@@ -52,7 +52,7 @@ public class PersonService {
 
 	}
 
-	// add pattern matching in the query and stored proc for getting and searching
+	//TODO add pattern matching in the query and stored proc for getting and searching
 	public ArrayList<Person> searchPerson(String name) {
 		String query = "select * from [Person] where LName = ?";
 		ArrayList<Person> people = new ArrayList<Person>();

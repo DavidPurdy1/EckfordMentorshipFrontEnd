@@ -98,7 +98,7 @@ public class MenteeInterface extends JFrame {
 		AddPersonButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		AddPersonButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AddPersonDialog addPerson = new AddPersonDialog(dbService);
+				AddPersonDialog addPerson = new AddPersonDialog(dbService, false);
 				addPerson.setVisible(true);
 			}
 		});

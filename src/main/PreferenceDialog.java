@@ -270,25 +270,18 @@ public class PreferenceDialog extends JDialog {
 						// TODO: Fix this in the table and the preference dialog. Kinda a silly thing to
 						// put in the preference form
 						p.Position = "N/A";
-						
-						//TODO: Change how the mentee service works so you have to enter in a preference and then 
+
+						// TODO: Change how the mentee service works so you have to enter in a
+						// preference and then
 						PreferenceService prefService = new PreferenceService(dbService);
-						prefService.addPreference(p);
-						JOptionPane.showMessageDialog(null, "Preference entered successfully");
-
-						MenteeAndMentorService mmService = new MenteeAndMentorService(dbService);
-						// TODO: Find match for a mentee,
-						// once they are matched use its email to add in a mentee entry
-						
-						// TODO: HOW DO I GET EMAIL TF
-//						ArrayList<Match> match = prefService.match(); 
-//						
-//						for(Match m : match) {
-//							// m.Email
-//						}
-						// TODO: Add to the mentee table
-
-						mmService.addMentee();
+						if (prefService.addPreference(p)) {
+							JOptionPane.showMessageDialog(null, "Preference entered successfully");
+							// TODO: Update mentee with preferenceID
+							
+						}
+						else {
+							JOptionPane.showMessageDialog(null, "Preference entered failed");
+						}
 					}
 				});
 				saveButton.setFont(new Font("Tahoma", Font.PLAIN, 10));

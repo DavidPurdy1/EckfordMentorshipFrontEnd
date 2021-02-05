@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Eckford.services.DatabaseConnectionService;
+import Eckford.services.MenteeAndMentorService;
 import Eckford.services.PersonService;
 import Tables.Person;
 
@@ -52,7 +53,7 @@ public class AddPersonDialog extends JDialog {
 	 */
 	private DatabaseConnectionService dbService;
 
-	public AddPersonDialog(DatabaseConnectionService dbService) {
+	public AddPersonDialog(DatabaseConnectionService dbService, boolean isMentor) {
 		this.dbService = dbService;
 		setTitle("Add Person");
 		setBounds(100, 100, 392, 414);
@@ -273,7 +274,7 @@ public class AddPersonDialog extends JDialog {
 				JButton saveButton = new JButton("Save");
 				saveButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						savePerson();
+						savePerson(isMentor);
 					}
 				});
 				saveButton.setFont(new Font("Tahoma", Font.PLAIN, 10));
@@ -299,7 +300,7 @@ public class AddPersonDialog extends JDialog {
 		}
 	}
 
-	protected void savePerson() {
+	protected void savePerson(boolean isMentor) {
 		Person p = new Person();
 		p.Fname = FNameField.getText();
 		p.Lname = LNameField.getText();
@@ -316,7 +317,14 @@ public class AddPersonDialog extends JDialog {
 		try {
 			PersonService pService = new PersonService(dbService);
 			if (p.Fname.trim().length() > 0 && p.Lname.trim().length() > 0) {
-				pService.addPerson(p);
+				
+				MenteeAndMentorService mmService = new MenteeAndMentorService(dbService); 
+				if(isMentor) {
+					mmService.addMentor(); 
+				}else {
+					mmService.addMentee(p);
+				}
+				
 			} else {
 				JOptionPane.showMessageDialog(AddPersonDialog.this, "Did not enter in first name or last name", "Error",
 						JOptionPane.ERROR_MESSAGE);
