@@ -23,6 +23,8 @@ import javax.swing.JTextField;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class MenteeDialog extends JDialog {
 
@@ -31,12 +33,11 @@ public class MenteeDialog extends JDialog {
 	private JTextField LNameField;
 	private JTextField PhoneField;
 	private JTextField emailField;
-	private JTextField RaceField;
 	private JTextField NationalityField;
 	private JTextField EthnicityField;
-	private JTextField LGBTField;
-	private JTextField SexField;
-
+	private JComboBox raceBox; 
+	private JComboBox LGBTBox;
+	private JComboBox sexBox; 
 	private DatabaseConnectionService dbService;
 
 	public MenteeDialog(DatabaseConnectionService dbService) {
@@ -144,14 +145,14 @@ public class MenteeDialog extends JDialog {
 			contentPanel.add(RaceLabel, gbc_RaceLabel);
 		}
 		{
-			RaceField = new JTextField();
-			GridBagConstraints gbc_RaceField = new GridBagConstraints();
-			gbc_RaceField.fill = GridBagConstraints.HORIZONTAL;
-			gbc_RaceField.insets = new Insets(0, 0, 5, 0);
-			gbc_RaceField.gridx = 1;
-			gbc_RaceField.gridy = 4;
-			contentPanel.add(RaceField, gbc_RaceField);
-			RaceField.setColumns(10);
+			raceBox = new JComboBox();
+			raceBox.setModel(new DefaultComboBoxModel(new String[] {"", "American Indian or Alaskan Native", "Asian", "Black or African American", "Native Hawaiian or Other Pacific Islander", "White Hispanic", "White Non-Hispanic"}));
+			GridBagConstraints gbc_raceBox = new GridBagConstraints();
+			gbc_raceBox.insets = new Insets(0, 0, 5, 0);
+			gbc_raceBox.fill = GridBagConstraints.HORIZONTAL;
+			gbc_raceBox.gridx = 1;
+			gbc_raceBox.gridy = 4;
+			contentPanel.add(raceBox, gbc_raceBox);
 		}
 		{
 			JLabel NationalityLabel = new JLabel("Nationality");
@@ -204,14 +205,14 @@ public class MenteeDialog extends JDialog {
 			contentPanel.add(LGBTLabel, gbc_LGBTLabel);
 		}
 		{
-			LGBTField = new JTextField();
-			GridBagConstraints gbc_LGBTField = new GridBagConstraints();
-			gbc_LGBTField.insets = new Insets(0, 0, 5, 0);
-			gbc_LGBTField.fill = GridBagConstraints.HORIZONTAL;
-			gbc_LGBTField.gridx = 1;
-			gbc_LGBTField.gridy = 7;
-			contentPanel.add(LGBTField, gbc_LGBTField);
-			LGBTField.setColumns(10);
+			LGBTBox = new JComboBox();
+			LGBTBox.setModel(new DefaultComboBoxModel(new String[] {"", "Yes", "No", "Prefer not to say"}));
+			GridBagConstraints gbc_LGBTBox = new GridBagConstraints();
+			gbc_LGBTBox.insets = new Insets(0, 0, 5, 0);
+			gbc_LGBTBox.fill = GridBagConstraints.HORIZONTAL;
+			gbc_LGBTBox.gridx = 1;
+			gbc_LGBTBox.gridy = 7;
+			contentPanel.add(LGBTBox, gbc_LGBTBox);
 		}
 		{
 			JLabel SexLabel = new JLabel("Sex");
@@ -224,14 +225,14 @@ public class MenteeDialog extends JDialog {
 			contentPanel.add(SexLabel, gbc_SexLabel);
 		}
 		{
-			SexField = new JTextField();
-			GridBagConstraints gbc_SexField = new GridBagConstraints();
-			gbc_SexField.insets = new Insets(0, 0, 5, 0);
-			gbc_SexField.fill = GridBagConstraints.HORIZONTAL;
-			gbc_SexField.gridx = 1;
-			gbc_SexField.gridy = 8;
-			contentPanel.add(SexField, gbc_SexField);
-			SexField.setColumns(10);
+			sexBox = new JComboBox();
+			sexBox.setModel(new DefaultComboBoxModel(new String[] {"", "Male", "Female", "Genderqueer/Non-Binary", "Prefer not to say"}));
+			GridBagConstraints gbc_sexBox = new GridBagConstraints();
+			gbc_sexBox.insets = new Insets(0, 0, 5, 0);
+			gbc_sexBox.fill = GridBagConstraints.HORIZONTAL;
+			gbc_sexBox.gridx = 1;
+			gbc_sexBox.gridy = 8;
+			contentPanel.add(sexBox, gbc_sexBox);
 		}
 		{
 			JPanel buttonPane = new JPanel();
@@ -241,8 +242,10 @@ public class MenteeDialog extends JDialog {
 				JButton saveButton = new JButton("Next");
 				saveButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						
+						//TODO: NEED TO UPDATE ADDRESSID IN PERSON
 						savePerson();
-						new PreferenceDialog(dbService); 
+						new AddressDialog(dbService); 
 					}
 				});
 				saveButton.setFont(new Font("Tahoma", Font.PLAIN, 10));
@@ -275,10 +278,10 @@ public class MenteeDialog extends JDialog {
 		p.PhoneNumber = PhoneField.getText();
 		p.Email = emailField.getText();
 		p.Nationality = NationalityField.getText();
-		p.Race = RaceField.getText();
+		p.Race = (String) raceBox.getSelectedItem(); 
 		p.Ethnicity = EthnicityField.getText();
-		p.Sex = SexField.getText();
-		p.LGBT = LGBTField.getText();
+		p.Sex = (String) sexBox.getSelectedItem(); 
+		p.LGBT = (String) LGBTBox.getSelectedItem(); 
 		
 
 		// TODO: Add more checks for invalid input

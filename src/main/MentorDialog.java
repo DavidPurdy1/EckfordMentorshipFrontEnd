@@ -23,6 +23,8 @@ import javax.swing.JTextField;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class MentorDialog extends JDialog {
 
@@ -31,17 +33,15 @@ public class MentorDialog extends JDialog {
 	private JTextField LNameField;
 	private JTextField PhoneField;
 	private JTextField emailField;
-	private JTextField AddressField;
-	private JTextField RaceField;
 	private JTextField NationalityField;
 	private JTextField EthnicityField;
-	private JTextField LGBTField;
-	private JTextField SexField;
-
+	private JComboBox raceBox; 
+	private JComboBox experienceBox; 
+	private JComboBox fieldBox; 
+	private JComboBox sexBox; 
+	private JComboBox LGBTBox; 
 	private DatabaseConnectionService dbService;
 	private JTextField posField;
-	private JTextField senField;
-	private JTextField FieldField;
 
 	public MentorDialog(DatabaseConnectionService dbService) {
 		this.dbService = dbService;
@@ -138,44 +138,24 @@ public class MentorDialog extends JDialog {
 			emailField.setColumns(10);
 		}
 		{
-			JLabel AddressLabel = new JLabel("Address ID");
-			AddressLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			GridBagConstraints gbc_AddressLabel = new GridBagConstraints();
-			gbc_AddressLabel.anchor = GridBagConstraints.EAST;
-			gbc_AddressLabel.insets = new Insets(0, 0, 5, 5);
-			gbc_AddressLabel.gridx = 0;
-			gbc_AddressLabel.gridy = 4;
-			contentPanel.add(AddressLabel, gbc_AddressLabel);
-		}
-		{
-			AddressField = new JTextField();
-			GridBagConstraints gbc_AddressField = new GridBagConstraints();
-			gbc_AddressField.fill = GridBagConstraints.HORIZONTAL;
-			gbc_AddressField.insets = new Insets(0, 0, 5, 0);
-			gbc_AddressField.gridx = 1;
-			gbc_AddressField.gridy = 4;
-			contentPanel.add(AddressField, gbc_AddressField);
-			AddressField.setColumns(10);
-		}
-		{
 			JLabel RaceLabel = new JLabel("Race");
 			RaceLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			GridBagConstraints gbc_RaceLabel = new GridBagConstraints();
 			gbc_RaceLabel.anchor = GridBagConstraints.EAST;
 			gbc_RaceLabel.insets = new Insets(0, 0, 5, 5);
 			gbc_RaceLabel.gridx = 0;
-			gbc_RaceLabel.gridy = 5;
+			gbc_RaceLabel.gridy = 4;
 			contentPanel.add(RaceLabel, gbc_RaceLabel);
 		}
 		{
-			RaceField = new JTextField();
-			GridBagConstraints gbc_RaceField = new GridBagConstraints();
-			gbc_RaceField.fill = GridBagConstraints.HORIZONTAL;
-			gbc_RaceField.insets = new Insets(0, 0, 5, 0);
-			gbc_RaceField.gridx = 1;
-			gbc_RaceField.gridy = 5;
-			contentPanel.add(RaceField, gbc_RaceField);
-			RaceField.setColumns(10);
+			raceBox = new JComboBox();
+			raceBox.setModel(new DefaultComboBoxModel(new String[] {"", "American Indian or Alaskan Native", "Asian", "Black or African American", "Native Hawaiian or Other Pacific Islander", "White Hispanic", "White Non-Hispanic"}));
+			GridBagConstraints gbc_raceBox = new GridBagConstraints();
+			gbc_raceBox.insets = new Insets(0, 0, 5, 0);
+			gbc_raceBox.fill = GridBagConstraints.HORIZONTAL;
+			gbc_raceBox.gridx = 1;
+			gbc_raceBox.gridy = 4;
+			contentPanel.add(raceBox, gbc_raceBox);
 		}
 		{
 			JLabel NationalityLabel = new JLabel("Nationality");
@@ -184,7 +164,7 @@ public class MentorDialog extends JDialog {
 			gbc_NationalityLabel.anchor = GridBagConstraints.EAST;
 			gbc_NationalityLabel.insets = new Insets(0, 0, 5, 5);
 			gbc_NationalityLabel.gridx = 0;
-			gbc_NationalityLabel.gridy = 6;
+			gbc_NationalityLabel.gridy = 5;
 			contentPanel.add(NationalityLabel, gbc_NationalityLabel);
 		}
 		{
@@ -193,7 +173,7 @@ public class MentorDialog extends JDialog {
 			gbc_NationalityField.insets = new Insets(0, 0, 5, 0);
 			gbc_NationalityField.fill = GridBagConstraints.HORIZONTAL;
 			gbc_NationalityField.gridx = 1;
-			gbc_NationalityField.gridy = 6;
+			gbc_NationalityField.gridy = 5;
 			contentPanel.add(NationalityField, gbc_NationalityField);
 			NationalityField.setColumns(10);
 		}
@@ -204,7 +184,7 @@ public class MentorDialog extends JDialog {
 			gbc_EthnicityLabel_1.anchor = GridBagConstraints.EAST;
 			gbc_EthnicityLabel_1.insets = new Insets(0, 0, 5, 5);
 			gbc_EthnicityLabel_1.gridx = 0;
-			gbc_EthnicityLabel_1.gridy = 7;
+			gbc_EthnicityLabel_1.gridy = 6;
 			contentPanel.add(EthnicityLabel_1, gbc_EthnicityLabel_1);
 		}
 		{
@@ -213,7 +193,7 @@ public class MentorDialog extends JDialog {
 			gbc_EthnicityField.insets = new Insets(0, 0, 5, 0);
 			gbc_EthnicityField.fill = GridBagConstraints.HORIZONTAL;
 			gbc_EthnicityField.gridx = 1;
-			gbc_EthnicityField.gridy = 7;
+			gbc_EthnicityField.gridy = 6;
 			contentPanel.add(EthnicityField, gbc_EthnicityField);
 			EthnicityField.setColumns(10);
 		}
@@ -224,18 +204,18 @@ public class MentorDialog extends JDialog {
 			gbc_LGBTLabel.anchor = GridBagConstraints.EAST;
 			gbc_LGBTLabel.insets = new Insets(0, 0, 5, 5);
 			gbc_LGBTLabel.gridx = 0;
-			gbc_LGBTLabel.gridy = 8;
+			gbc_LGBTLabel.gridy = 7;
 			contentPanel.add(LGBTLabel, gbc_LGBTLabel);
 		}
 		{
-			LGBTField = new JTextField();
-			GridBagConstraints gbc_LGBTField = new GridBagConstraints();
-			gbc_LGBTField.insets = new Insets(0, 0, 5, 0);
-			gbc_LGBTField.fill = GridBagConstraints.HORIZONTAL;
-			gbc_LGBTField.gridx = 1;
-			gbc_LGBTField.gridy = 8;
-			contentPanel.add(LGBTField, gbc_LGBTField);
-			LGBTField.setColumns(10);
+			LGBTBox = new JComboBox();
+			LGBTBox.setModel(new DefaultComboBoxModel(new String[] {"", "Yes", "No", "Prefer not to say"}));
+			GridBagConstraints gbc_LGBTBox = new GridBagConstraints();
+			gbc_LGBTBox.insets = new Insets(0, 0, 5, 0);
+			gbc_LGBTBox.fill = GridBagConstraints.HORIZONTAL;
+			gbc_LGBTBox.gridx = 1;
+			gbc_LGBTBox.gridy = 7;
+			contentPanel.add(LGBTBox, gbc_LGBTBox);
 		}
 		{
 			JLabel SexLabel = new JLabel("Sex");
@@ -244,18 +224,18 @@ public class MentorDialog extends JDialog {
 			gbc_SexLabel.anchor = GridBagConstraints.EAST;
 			gbc_SexLabel.insets = new Insets(0, 0, 5, 5);
 			gbc_SexLabel.gridx = 0;
-			gbc_SexLabel.gridy = 9;
+			gbc_SexLabel.gridy = 8;
 			contentPanel.add(SexLabel, gbc_SexLabel);
 		}
 		{
-			SexField = new JTextField();
-			GridBagConstraints gbc_SexField = new GridBagConstraints();
-			gbc_SexField.insets = new Insets(0, 0, 5, 0);
-			gbc_SexField.fill = GridBagConstraints.HORIZONTAL;
-			gbc_SexField.gridx = 1;
-			gbc_SexField.gridy = 9;
-			contentPanel.add(SexField, gbc_SexField);
-			SexField.setColumns(10);
+			sexBox = new JComboBox();
+			sexBox.setModel(new DefaultComboBoxModel(new String[] {"", "Male", "Female", "Genderqueer/Non-Binary", "Prefer not to say"}));
+			GridBagConstraints gbc_sexBox = new GridBagConstraints();
+			gbc_sexBox.insets = new Insets(0, 0, 5, 0);
+			gbc_sexBox.fill = GridBagConstraints.HORIZONTAL;
+			gbc_sexBox.gridx = 1;
+			gbc_sexBox.gridy = 8;
+			contentPanel.add(sexBox, gbc_sexBox);
 		}
 		{
 			JLabel posLabel = new JLabel("Position");
@@ -264,7 +244,7 @@ public class MentorDialog extends JDialog {
 			gbc_posLabel.anchor = GridBagConstraints.EAST;
 			gbc_posLabel.insets = new Insets(0, 0, 5, 5);
 			gbc_posLabel.gridx = 0;
-			gbc_posLabel.gridy = 10;
+			gbc_posLabel.gridy = 9;
 			contentPanel.add(posLabel, gbc_posLabel);
 		}
 		{
@@ -273,48 +253,49 @@ public class MentorDialog extends JDialog {
 			gbc_posField.insets = new Insets(0, 0, 5, 0);
 			gbc_posField.fill = GridBagConstraints.HORIZONTAL;
 			gbc_posField.gridx = 1;
-			gbc_posField.gridy = 10;
+			gbc_posField.gridy = 9;
 			contentPanel.add(posField, gbc_posField);
 			posField.setColumns(10);
 		}
 		{
-			JLabel senLabel = new JLabel("Seniority");
+			JLabel senLabel = new JLabel("Years of Experience");
 			senLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			GridBagConstraints gbc_senLabel = new GridBagConstraints();
 			gbc_senLabel.anchor = GridBagConstraints.EAST;
 			gbc_senLabel.insets = new Insets(0, 0, 5, 5);
 			gbc_senLabel.gridx = 0;
-			gbc_senLabel.gridy = 11;
+			gbc_senLabel.gridy = 10;
 			contentPanel.add(senLabel, gbc_senLabel);
 		}
 		{
-			senField = new JTextField();
-			GridBagConstraints gbc_senField = new GridBagConstraints();
-			gbc_senField.insets = new Insets(0, 0, 5, 0);
-			gbc_senField.fill = GridBagConstraints.HORIZONTAL;
-			gbc_senField.gridx = 1;
-			gbc_senField.gridy = 11;
-			contentPanel.add(senField, gbc_senField);
-			senField.setColumns(10);
+			experienceBox = new JComboBox();
+			experienceBox.setModel(new DefaultComboBoxModel(new String[] {"", "0-1 years", "1-2 years", "3-4 years", "4-6 years", "6-10 years", "10+ years"}));
+			GridBagConstraints gbc_experienceBox = new GridBagConstraints();
+			gbc_experienceBox.insets = new Insets(0, 0, 5, 0);
+			gbc_experienceBox.fill = GridBagConstraints.HORIZONTAL;
+			gbc_experienceBox.gridx = 1;
+			gbc_experienceBox.gridy = 10;
+			contentPanel.add(experienceBox, gbc_experienceBox);
 		}
 		{
 			JLabel FieldLabel = new JLabel("Field");
 			FieldLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			GridBagConstraints gbc_FieldLabel = new GridBagConstraints();
 			gbc_FieldLabel.anchor = GridBagConstraints.EAST;
-			gbc_FieldLabel.insets = new Insets(0, 0, 0, 5);
+			gbc_FieldLabel.insets = new Insets(0, 0, 5, 5);
 			gbc_FieldLabel.gridx = 0;
-			gbc_FieldLabel.gridy = 12;
+			gbc_FieldLabel.gridy = 11;
 			contentPanel.add(FieldLabel, gbc_FieldLabel);
 		}
 		{
-			FieldField = new JTextField();
-			GridBagConstraints gbc_FieldField = new GridBagConstraints();
-			gbc_FieldField.fill = GridBagConstraints.HORIZONTAL;
-			gbc_FieldField.gridx = 1;
-			gbc_FieldField.gridy = 12;
-			contentPanel.add(FieldField, gbc_FieldField);
-			FieldField.setColumns(10);
+			fieldBox = new JComboBox();
+			fieldBox.setModel(new DefaultComboBoxModel(new String[] {"", "Accounting", "Architecture and Civil Engineering", "Business, Management, and Administration", "Communications", "Computer and Electrical Engineering", "Computer Science and Software Engineering", "Health and Medicine", "Law and Public Policy", "Mechanical Engineering", "Math and Science"}));
+			GridBagConstraints gbc_fieldBox = new GridBagConstraints();
+			gbc_fieldBox.insets = new Insets(0, 0, 5, 0);
+			gbc_fieldBox.fill = GridBagConstraints.HORIZONTAL;
+			gbc_fieldBox.gridx = 1;
+			gbc_fieldBox.gridy = 11;
+			contentPanel.add(fieldBox, gbc_fieldBox);
 		}
 		{
 			JPanel buttonPane = new JPanel();
@@ -325,7 +306,7 @@ public class MentorDialog extends JDialog {
 				saveButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						savePerson();
-						new PreferenceDialog(dbService); 
+						new AddressDialog(dbService);
 					}
 				});
 				saveButton.setFont(new Font("Tahoma", Font.PLAIN, 10));
@@ -358,18 +339,17 @@ public class MentorDialog extends JDialog {
 		p.PhoneNumber = PhoneField.getText();
 		p.Email = emailField.getText();
 		p.Nationality = NationalityField.getText();
-		p.AddressID = AddressField.getText();
-		p.Race = RaceField.getText();
+		p.Race = (String) raceBox.getSelectedItem(); 
 		p.Ethnicity = EthnicityField.getText();
-		p.Sex = SexField.getText();
-		p.LGBT = LGBTField.getText();
-		
+		p.Sex = (String) sexBox.getSelectedItem(); 
+		p.LGBT = (String) LGBTBox.getSelectedItem(); 
+		//TODO: FIX THIS AHHHHHH 
+		p.Senority = Integer.parseInt((String)experienceBox.getSelectedItem(), 0 ); 
 
-		// TODO: Add more checks for invalid input
 		try {
 
 			if (p.Fname.trim().length() > 0 && p.Lname.trim().length() > 0) {
-				new MenteeAndMentorService(dbService).addMentor(p, Integer.parseInt(senField.getText()), posField.getText(), FieldField.getText()); 
+				new MenteeAndMentorService(dbService).addMentor(p); 
 			} else {
 				JOptionPane.showMessageDialog(MentorDialog.this, "Did not enter in first name or last name", "Error",
 						JOptionPane.ERROR_MESSAGE);
