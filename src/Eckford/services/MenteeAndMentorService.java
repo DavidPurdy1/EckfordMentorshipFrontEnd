@@ -10,14 +10,14 @@ import Tables.Person;
 
 public class MenteeAndMentorService {
 
-	private DatabaseConnectionService dbService; 
-	
+	private DatabaseConnectionService dbService;
+
 	public MenteeAndMentorService(DatabaseConnectionService dbService) {
-		this.dbService = dbService; 
+		this.dbService = dbService;
 	}
-	
+
 	public boolean addMentee(Person p) {
-		
+
 		CallableStatement cs = null;
 		try {
 			cs = this.dbService.getConnection().prepareCall("{? = call insert_mentee(?, ?, ?, ?, ?, ?, ?, ?, ?)}");
@@ -46,11 +46,12 @@ public class MenteeAndMentorService {
 		}
 		return false;
 	}
-	
+
 	public boolean addMentor(Person p, Integer sen, String pos, String field) {
 		CallableStatement cs = null;
 		try {
-			cs = this.dbService.getConnection().prepareCall("{? = call insert_mentor(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
+			cs = this.dbService.getConnection()
+					.prepareCall("{? = call insert_mentor(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
 			cs.setInt(2, sen);
 			cs.setString(3, pos);
 			cs.setString(4, field);
@@ -71,7 +72,4 @@ public class MenteeAndMentorService {
 		}
 		return false;
 	}
-	
-	
-	
 }

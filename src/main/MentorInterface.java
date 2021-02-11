@@ -96,7 +96,7 @@ public class MentorInterface extends JFrame{
 		JButton AddPersonButton = new JButton("Add Person");
 		AddPersonButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AddPersonDialog addPerson = new AddPersonDialog(dbService, true);
+				MentorDialog addPerson = new MentorDialog(dbService);
 				addPerson.setVisible(true);
 			}
 		});

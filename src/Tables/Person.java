@@ -12,4 +12,7 @@ public class Person {
 	public String Sex;
 	public String Ethnicity;
 	public String LGBT;
+	public String Position; 
+	public String Field; 
+	public Integer Senority; 
 }
