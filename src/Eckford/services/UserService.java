@@ -32,7 +32,7 @@ public class UserService {
 	}
 
 	public boolean login(String username, String password) {
-		String query = "Select PasswordSalt, PasswordHash from [User] where Email = ?";
+		String query = "call get_password(?)";
 		try {
 			// returns the salt and hash from the user table
 			PreparedStatement stmt = this.dbService.getConnection().prepareCall(query);
@@ -80,7 +80,7 @@ public class UserService {
 	}
 	
 	public String getRole(String user) {
-		String query = "Select [Role] from [User] where Email = ?";
+		String query = "call get_role(?)";
 		try {
 			// returns the salt and hash from the user table
 			PreparedStatement stmt = this.dbService.getConnection().prepareCall(query);

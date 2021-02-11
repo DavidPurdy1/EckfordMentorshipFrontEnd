@@ -53,12 +53,12 @@ public class PersonService {
 	}
 
 	//TODO add pattern matching in the query and stored proc for getting and searching
-	public ArrayList<Person> searchPerson(String name) {
-		String query = "select * from [Person] where LName = ?";
+	public ArrayList<Person> searchPerson(String email) {
+		String query = "call get_person(?)";
 		ArrayList<Person> people = new ArrayList<Person>();
 		try {
 			PreparedStatement ps = this.dbService.getConnection().prepareCall(query);
-			ps.setString(1, name);
+			ps.setString(1, email);
 			ResultSet rs = ps.executeQuery();
 			this.dbService.getConnection().commit();
 			while (rs.next()) {
@@ -83,7 +83,7 @@ public class PersonService {
 
 	public ArrayList<Person> getAllPerson() {
 		ArrayList<Person> people = new ArrayList<Person>();
-		String query = "SELECT * from Person";
+		String query = "call all_person";
 		try (Statement stmt = dbService.getConnection().createStatement()) {
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
