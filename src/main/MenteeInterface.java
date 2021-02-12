@@ -92,7 +92,8 @@ public class MenteeInterface extends JFrame {
 
 		table = new JTable();
 		scrollPane.setViewportView(table);
-		table.setModel(new MatchTableModel(new PreferenceService(dbService).findMatches()));
+		//TODO: IF THEY DO NOT EXIST IN THE MENTEE TABLE THEN IT WILL TRY TO FIND THE MATCHES RIGHT AT THE BEGINNING
+		//table.setModel(new MatchTableModel(new PreferenceService(dbService).findMatches()));
 
 		JPanel buttonPanel = new JPanel();
 		contentPane.add(buttonPanel, BorderLayout.SOUTH);
