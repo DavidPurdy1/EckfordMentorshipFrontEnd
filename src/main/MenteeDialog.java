@@ -242,10 +242,10 @@ public class MenteeDialog extends JDialog {
 				JButton saveButton = new JButton("Next");
 				saveButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						
-						//TODO: NEED TO UPDATE ADDRESSID IN PERSON
+
 						savePerson();
-						new AddressDialog(dbService); 
+						AddressDialog ad= new AddressDialog(dbService);
+		                ad.setVisible(true);
 					}
 				});
 				saveButton.setFont(new Font("Tahoma", Font.PLAIN, 10));

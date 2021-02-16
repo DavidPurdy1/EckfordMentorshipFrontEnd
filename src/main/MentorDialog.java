@@ -306,7 +306,8 @@ public class MentorDialog extends JDialog {
 				saveButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						savePerson();
-						new AddressDialog(dbService);
+						AddressDialog ad= new AddressDialog(dbService);
+		                ad.setVisible(true);
 					}
 				});
 				saveButton.setFont(new Font("Tahoma", Font.PLAIN, 10));
@@ -344,7 +345,7 @@ public class MentorDialog extends JDialog {
 		p.Sex = (String) sexBox.getSelectedItem(); 
 		p.LGBT = (String) LGBTBox.getSelectedItem(); 
 		//TODO: FIX THIS AHHHHHH 
-		p.Senority = Integer.parseInt((String)experienceBox.getSelectedItem(), 0 ); 
+		p.Seniority = Integer.parseInt((String)experienceBox.getSelectedItem(), 0 ); 
 
 		try {
 

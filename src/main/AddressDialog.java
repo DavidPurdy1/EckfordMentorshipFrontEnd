@@ -176,7 +176,8 @@ public class AddressDialog extends JDialog {
 						// TODO: Add next page here and dispose of this page
 						// TODO: Add to person table here
 						
-						new PreferenceDialog(dbService); 
+						PreferenceDialog pd= new PreferenceDialog(dbService);
+		                pd.setVisible(true);
 						
 						dispose();
 						setVisible(false);

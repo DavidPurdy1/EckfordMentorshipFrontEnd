@@ -14,5 +14,5 @@ public class Person {
 	public String LGBT;
 	public String Position; 
 	public String Field; 
-	public Integer Senority; 
+	public Integer Seniority; 
 }

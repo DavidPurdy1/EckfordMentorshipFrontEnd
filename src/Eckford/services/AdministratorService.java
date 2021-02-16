@@ -8,16 +8,17 @@ import javax.swing.JOptionPane;
 
 import Tables.Person;
 
-public class MenteeAndMentorService {
 
-	private DatabaseConnectionService dbService;
+public class AdministratorService {
 
-	public MenteeAndMentorService(DatabaseConnectionService dbService) {
-		this.dbService = dbService;
+	private DatabaseConnectionService dbService; 
+	
+	public AdministratorService(DatabaseConnectionService dbService) {
+		this.dbService = dbService; 
 	}
-
+	
 	public boolean addMentee(Person p) {
-
+		
 		CallableStatement cs = null;
 		try {
 			cs = this.dbService.getConnection().prepareCall("{? = call insert_mentee(?, ?, ?, ?, ?, ?, ?, ?, ?)}");
@@ -46,15 +47,14 @@ public class MenteeAndMentorService {
 		}
 		return false;
 	}
-
-	public boolean addMentor(Person p) {
+	
+	public boolean addMentor(Person p, Integer sen, String pos, String field) {
 		CallableStatement cs = null;
 		try {
-			cs = this.dbService.getConnection()
-					.prepareCall("{? = call insert_mentor(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
-			cs.setInt(2, p.Seniority);
-			cs.setString(3, p.Position);
-			cs.setString(4, p.Field);
+			cs = this.dbService.getConnection().prepareCall("{? = call insert_mentor(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
+			cs.setInt(2, sen);
+			cs.setString(3, pos);
+			cs.setString(4, field);
 			cs.setString(5, p.PhoneNumber);
 			cs.setString(6, p.LGBT);
 			cs.setString(7, p.Fname);
@@ -72,4 +72,7 @@ public class MenteeAndMentorService {
 		}
 		return false;
 	}
+	
+	
+	
 }

@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Eckford.services.DatabaseConnectionService;
+import Eckford.services.Import;
 import Eckford.services.MenteeAndMentorService;
 import Eckford.services.PersonService;
 import Eckford.services.PreferenceService;
@@ -29,7 +30,7 @@ import javax.swing.JScrollPane;
 public class MenteeInterface extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField LastNametextField;
+	private JTextField emailField;
 	private JTable table;
 	PersonService pService;
 	Person p;
@@ -54,13 +55,13 @@ public class MenteeInterface extends JFrame {
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		contentPane.add(panel, BorderLayout.NORTH);
 
-		JLabel lblNewLabel = new JLabel("Enter Last Name");
+		JLabel lblNewLabel = new JLabel("Enter Email Address");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel.add(lblNewLabel);
 
-		LastNametextField = new JTextField();
-		panel.add(LastNametextField);
-		LastNametextField.setColumns(10);
+		emailField = new JTextField();
+		panel.add(emailField);
+		emailField.setColumns(10);
 
 		JButton btnNewButton = new JButton("Search");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -68,10 +69,10 @@ public class MenteeInterface extends JFrame {
 			// This is for searching for items in the table
 			public void actionPerformed(ActionEvent e) {
 				try {
-					String lastName = LastNametextField.getText();
+					String Email = emailField.getText();
 					ArrayList<Person> people = null;
-					if (lastName != null && lastName.trim().length() > 0) {
-						people = pService.searchPerson(lastName);
+					if (Email != null && Email.trim().length() > 0) {
+						people = pService.searchPerson(Email);
 					} else {
 						people = pService.getAllPerson();
 					}
@@ -125,9 +126,20 @@ public class MenteeInterface extends JFrame {
 				System.out.println("found all matches");
 			}
 		});
+		
+		JButton ImportButton = new JButton("Import");
+		ImportButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				Import is = new Import(dbService); 
+				is.setVisible(true);
+				
+			}
+		});
 		FindMatchesButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		buttonPanel.add(FindMatchesButton);
 		buttonPanel.add(AddPreference);
 		buttonPanel.add(AddPersonButton);
+		buttonPanel.add(ImportButton);
 	}
 }
