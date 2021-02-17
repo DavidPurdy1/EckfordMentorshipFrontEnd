@@ -30,12 +30,12 @@ public class PreferenceDialog extends JDialog {
 	private JTextField CityField;
 	private JTextField NationalityField;
 	private JTextField EthnicityField;
-	private JTextField LGBTField;
 	private JComboBox fieldBox;
 	private JComboBox sexBox;
 	private JComboBox raceBox;
 	private JComboBox stateBox;
 	private JComboBox experienceBox;
+	private JComboBox LGBTBox;
 
 	public PreferenceDialog(DatabaseConnectionService dbService) {
 		this.dbService = dbService;
@@ -63,10 +63,7 @@ public class PreferenceDialog extends JDialog {
 		}
 		{
 			stateBox = new JComboBox();
-			stateBox.setModel(new DefaultComboBoxModel(new String[] { "", "AL", "AK", "AZ", "AR", "CA", "CO", "CT",
-					"DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN",
-					"MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI",
-					"SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY" }));
+			stateBox.setModel(new DefaultComboBoxModel(new String[] {"Any", "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"}));
 			GridBagConstraints gbc_stateBox = new GridBagConstraints();
 			gbc_stateBox.insets = new Insets(0, 0, 5, 0);
 			gbc_stateBox.fill = GridBagConstraints.HORIZONTAL;
@@ -106,9 +103,7 @@ public class PreferenceDialog extends JDialog {
 		}
 		{
 			raceBox = new JComboBox();
-			raceBox.setModel(new DefaultComboBoxModel(
-					new String[] { "", "American Indian or Alaskan Native", "Asian", "Black or African American",
-							"Native Hawaiian or Other Pacific Islander", "White Hispanic", "White Non-Hispanic" }));
+			raceBox.setModel(new DefaultComboBoxModel(new String[] {"Any", "American Indian or Alaskan Native", "Asian", "Black or African American", "Native Hawaiian or Other Pacific Islander", "White Hispanic", "White Non-Hispanic"}));
 			GridBagConstraints gbc_racebox = new GridBagConstraints();
 			gbc_racebox.insets = new Insets(0, 0, 5, 0);
 			gbc_racebox.fill = GridBagConstraints.HORIZONTAL;
@@ -168,14 +163,14 @@ public class PreferenceDialog extends JDialog {
 			contentPanel.add(LGBTLabel, gbc_LGBTLabel);
 		}
 		{
-			LGBTField = new JTextField();
-			GridBagConstraints gbc_LGBTField = new GridBagConstraints();
-			gbc_LGBTField.insets = new Insets(0, 0, 5, 0);
-			gbc_LGBTField.fill = GridBagConstraints.HORIZONTAL;
-			gbc_LGBTField.gridx = 1;
-			gbc_LGBTField.gridy = 6;
-			contentPanel.add(LGBTField, gbc_LGBTField);
-			LGBTField.setColumns(10);
+			LGBTBox = new JComboBox();
+			LGBTBox.setModel(new DefaultComboBoxModel(new String[] {"Any", "Yes", "No", "Prefer not to say"}));
+			GridBagConstraints gbc_LGBTBox = new GridBagConstraints();
+			gbc_LGBTBox.insets = new Insets(0, 0, 5, 0);
+			gbc_LGBTBox.fill = GridBagConstraints.HORIZONTAL;
+			gbc_LGBTBox.gridx = 1;
+			gbc_LGBTBox.gridy = 6;
+			contentPanel.add(LGBTBox, gbc_LGBTBox);
 		}
 		{
 			JLabel SexLabel = new JLabel("Sex");
@@ -189,8 +184,7 @@ public class PreferenceDialog extends JDialog {
 		}
 		{
 			sexBox = new JComboBox();
-			sexBox.setModel(new DefaultComboBoxModel(
-					new String[] { "", "Male", "Female", "Genderqueer/Non-Binary", "Prefer not to say" }));
+			sexBox.setModel(new DefaultComboBoxModel(new String[] {"Any", "Male", "Female", "Genderqueer/Non-Binary", "Prefer not to say"}));
 			GridBagConstraints gbc_comboBox = new GridBagConstraints();
 			gbc_comboBox.insets = new Insets(0, 0, 5, 0);
 			gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
@@ -210,10 +204,7 @@ public class PreferenceDialog extends JDialog {
 		}
 		{
 			fieldBox = new JComboBox();
-			fieldBox.setModel(new DefaultComboBoxModel(new String[] { "", "Accounting",
-					"Architecture and Civil Engineering", "Business, Management, and Administration", "Communications",
-					"Computer and Electrical Engineering", "Computer Science and Software Engineering",
-					"Health and Medicine", "Law and Public Policy", "Mechanical Engineering", "Math and Science" }));
+			fieldBox.setModel(new DefaultComboBoxModel(new String[] {"Any", "Accounting", "Architecture and Civil Engineering", "Business, Management, and Administration", "Communications", "Computer and Electrical Engineering", "Computer Science and Software Engineering", "Health and Medicine", "Law and Public Policy", "Mechanical Engineering", "Math and Science"}));
 			GridBagConstraints gbc_fieldBox = new GridBagConstraints();
 			gbc_fieldBox.insets = new Insets(0, 0, 5, 0);
 			gbc_fieldBox.fill = GridBagConstraints.HORIZONTAL;
@@ -234,8 +225,7 @@ public class PreferenceDialog extends JDialog {
 		}
 		{
 			experienceBox = new JComboBox();
-			experienceBox.setModel(new DefaultComboBoxModel(new String[] { "", "0-1 years", "1-2 years", "3-4 years",
-					"4-6 years", "6-10 years", "10+ years" }));
+			experienceBox.setModel(new DefaultComboBoxModel(new String[] {"Any", "0-1 years", "1-2 years", "3-4 years", "4-6 years", "6-10 years", "10+ years"}));
 			GridBagConstraints gbc_experienceBox = new GridBagConstraints();
 			gbc_experienceBox.insets = new Insets(0, 0, 5, 0);
 			gbc_experienceBox.fill = GridBagConstraints.HORIZONTAL;
@@ -252,29 +242,23 @@ public class PreferenceDialog extends JDialog {
 				JButton saveButton = new JButton("Save");
 				saveButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-
+						
 						Preference p = new Preference();
 						p.City = CityField.getText();
 						p.Nationality = NationalityField.getText();
 						p.Ethnicity = EthnicityField.getText();
 						p.Field = (String) fieldBox.getSelectedItem();
-						p.LGBT = LGBTField.getText();
-						// TODO: Fix this to be an integer value. Right now it only gets the first value of experience field
-						p.Seniority = 1; 
+						p.LGBT = (String) LGBTBox.getSelectedItem(); 
+						p.Seniority = (String) experienceBox.getSelectedItem(); 
 						p.Sex = (String) sexBox.getSelectedItem();
 						p.State = (String) stateBox.getSelectedItem();
-
-						// TODO: Fix this in the table and the preference dialog. Kinda a silly thing to
-						// put in the preference form
-						p.Position = "Any";
-
-						// TODO: Change how the mentee service works so you have to enter in a
-						// preference and then
+						
 						PreferenceService prefService = new PreferenceService(dbService);
 						if (prefService.addPreference(p)) {
 							JOptionPane.showMessageDialog(null, "Preference entered successfully");
-							// TODO: Update mentee with preferenceID
-
+							
+							dispose(); 
+							setVisible(false);
 						} else {
 							JOptionPane.showMessageDialog(null, "Preference entered failed");
 						}

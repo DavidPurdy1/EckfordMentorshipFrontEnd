@@ -127,19 +127,9 @@ public class MenteeInterface extends JFrame {
 			}
 		});
 		
-		JButton ImportButton = new JButton("Import");
-		ImportButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				ImportCSV is = new ImportCSV(dbService); 
-				is.setVisible(true);
-				
-			}
-		});
 		FindMatchesButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		buttonPanel.add(FindMatchesButton);
 		buttonPanel.add(AddPreference);
 		buttonPanel.add(AddPersonButton);
-		buttonPanel.add(ImportButton);
 	}
 }

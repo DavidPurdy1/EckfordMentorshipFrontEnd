@@ -48,7 +48,7 @@ public class MenteeAndMentorService {
 		try {
 			cs = this.dbService.getConnection()
 					.prepareCall("{? = call insert_mentor(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
-			cs.setInt(2, p.Seniority);
+			cs.setString(2, p.Seniority);
 			cs.setString(3, p.Position);
 			cs.setString(4, p.Field);
 			cs.setString(5, p.PhoneNumber);

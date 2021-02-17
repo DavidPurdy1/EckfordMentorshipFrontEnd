@@ -322,8 +322,7 @@ public class MentorDialog extends JDialog {
 		p.Ethnicity = EthnicityField.getText();
 		p.Sex = (String) sexBox.getSelectedItem(); 
 		p.LGBT = (String) LGBTBox.getSelectedItem(); 
-		//TODO: FIX THIS AHHHHHH 
-		p.Seniority = Integer.parseInt((String)experienceBox.getSelectedItem(), 0 ); 
+		p.Seniority =(String)experienceBox.getSelectedItem();
 
 		try {
 
