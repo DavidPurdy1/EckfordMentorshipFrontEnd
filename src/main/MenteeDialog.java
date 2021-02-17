@@ -32,16 +32,13 @@ public class MenteeDialog extends JDialog {
 	private JTextField FNameField;
 	private JTextField LNameField;
 	private JTextField PhoneField;
-	private JTextField emailField;
 	private JTextField NationalityField;
 	private JTextField EthnicityField;
-	private JComboBox raceBox; 
+	private JComboBox raceBox;
 	private JComboBox LGBTBox;
-	private JComboBox sexBox; 
-	private DatabaseConnectionService dbService;
+	private JComboBox sexBox;
 
 	public MenteeDialog(DatabaseConnectionService dbService) {
-		this.dbService = dbService;
 		setTitle("Add Mentee");
 		setBounds(100, 100, 392, 414);
 		getContentPane().setLayout(new BorderLayout());
@@ -115,43 +112,25 @@ public class MenteeDialog extends JDialog {
 			PhoneField.setColumns(10);
 		}
 		{
-			JLabel EmailLabel = new JLabel("Email");
-			EmailLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			GridBagConstraints gbc_EmailLabel = new GridBagConstraints();
-			gbc_EmailLabel.anchor = GridBagConstraints.EAST;
-			gbc_EmailLabel.insets = new Insets(0, 0, 5, 5);
-			gbc_EmailLabel.gridx = 0;
-			gbc_EmailLabel.gridy = 3;
-			contentPanel.add(EmailLabel, gbc_EmailLabel);
-		}
-		{
-			emailField = new JTextField();
-			GridBagConstraints gbc_emailField = new GridBagConstraints();
-			gbc_emailField.fill = GridBagConstraints.HORIZONTAL;
-			gbc_emailField.insets = new Insets(0, 0, 5, 0);
-			gbc_emailField.gridx = 1;
-			gbc_emailField.gridy = 3;
-			contentPanel.add(emailField, gbc_emailField);
-			emailField.setColumns(10);
-		}
-		{
 			JLabel RaceLabel = new JLabel("Race");
 			RaceLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			GridBagConstraints gbc_RaceLabel = new GridBagConstraints();
 			gbc_RaceLabel.anchor = GridBagConstraints.EAST;
 			gbc_RaceLabel.insets = new Insets(0, 0, 5, 5);
 			gbc_RaceLabel.gridx = 0;
-			gbc_RaceLabel.gridy = 4;
+			gbc_RaceLabel.gridy = 3;
 			contentPanel.add(RaceLabel, gbc_RaceLabel);
 		}
 		{
 			raceBox = new JComboBox();
-			raceBox.setModel(new DefaultComboBoxModel(new String[] {"", "American Indian or Alaskan Native", "Asian", "Black or African American", "Native Hawaiian or Other Pacific Islander", "White Hispanic", "White Non-Hispanic"}));
+			raceBox.setModel(new DefaultComboBoxModel(
+					new String[] { "", "American Indian or Alaskan Native", "Asian", "Black or African American",
+							"Native Hawaiian or Other Pacific Islander", "White Hispanic", "White Non-Hispanic" }));
 			GridBagConstraints gbc_raceBox = new GridBagConstraints();
 			gbc_raceBox.insets = new Insets(0, 0, 5, 0);
 			gbc_raceBox.fill = GridBagConstraints.HORIZONTAL;
 			gbc_raceBox.gridx = 1;
-			gbc_raceBox.gridy = 4;
+			gbc_raceBox.gridy = 3;
 			contentPanel.add(raceBox, gbc_raceBox);
 		}
 		{
@@ -161,7 +140,7 @@ public class MenteeDialog extends JDialog {
 			gbc_NationalityLabel.anchor = GridBagConstraints.EAST;
 			gbc_NationalityLabel.insets = new Insets(0, 0, 5, 5);
 			gbc_NationalityLabel.gridx = 0;
-			gbc_NationalityLabel.gridy = 5;
+			gbc_NationalityLabel.gridy = 4;
 			contentPanel.add(NationalityLabel, gbc_NationalityLabel);
 		}
 		{
@@ -170,7 +149,7 @@ public class MenteeDialog extends JDialog {
 			gbc_NationalityField.insets = new Insets(0, 0, 5, 0);
 			gbc_NationalityField.fill = GridBagConstraints.HORIZONTAL;
 			gbc_NationalityField.gridx = 1;
-			gbc_NationalityField.gridy = 5;
+			gbc_NationalityField.gridy = 4;
 			contentPanel.add(NationalityField, gbc_NationalityField);
 			NationalityField.setColumns(10);
 		}
@@ -181,7 +160,7 @@ public class MenteeDialog extends JDialog {
 			gbc_EthnicityLabel_1.anchor = GridBagConstraints.EAST;
 			gbc_EthnicityLabel_1.insets = new Insets(0, 0, 5, 5);
 			gbc_EthnicityLabel_1.gridx = 0;
-			gbc_EthnicityLabel_1.gridy = 6;
+			gbc_EthnicityLabel_1.gridy = 5;
 			contentPanel.add(EthnicityLabel_1, gbc_EthnicityLabel_1);
 		}
 		{
@@ -190,7 +169,7 @@ public class MenteeDialog extends JDialog {
 			gbc_EthnicityField.insets = new Insets(0, 0, 5, 0);
 			gbc_EthnicityField.fill = GridBagConstraints.HORIZONTAL;
 			gbc_EthnicityField.gridx = 1;
-			gbc_EthnicityField.gridy = 6;
+			gbc_EthnicityField.gridy = 5;
 			contentPanel.add(EthnicityField, gbc_EthnicityField);
 			EthnicityField.setColumns(10);
 		}
@@ -201,17 +180,17 @@ public class MenteeDialog extends JDialog {
 			gbc_LGBTLabel.anchor = GridBagConstraints.EAST;
 			gbc_LGBTLabel.insets = new Insets(0, 0, 5, 5);
 			gbc_LGBTLabel.gridx = 0;
-			gbc_LGBTLabel.gridy = 7;
+			gbc_LGBTLabel.gridy = 6;
 			contentPanel.add(LGBTLabel, gbc_LGBTLabel);
 		}
 		{
 			LGBTBox = new JComboBox();
-			LGBTBox.setModel(new DefaultComboBoxModel(new String[] {"", "Yes", "No", "Prefer not to say"}));
+			LGBTBox.setModel(new DefaultComboBoxModel(new String[] { "", "Yes", "No", "Prefer not to say" }));
 			GridBagConstraints gbc_LGBTBox = new GridBagConstraints();
 			gbc_LGBTBox.insets = new Insets(0, 0, 5, 0);
 			gbc_LGBTBox.fill = GridBagConstraints.HORIZONTAL;
 			gbc_LGBTBox.gridx = 1;
-			gbc_LGBTBox.gridy = 7;
+			gbc_LGBTBox.gridy = 6;
 			contentPanel.add(LGBTBox, gbc_LGBTBox);
 		}
 		{
@@ -221,17 +200,18 @@ public class MenteeDialog extends JDialog {
 			gbc_SexLabel.anchor = GridBagConstraints.EAST;
 			gbc_SexLabel.insets = new Insets(0, 0, 5, 5);
 			gbc_SexLabel.gridx = 0;
-			gbc_SexLabel.gridy = 8;
+			gbc_SexLabel.gridy = 7;
 			contentPanel.add(SexLabel, gbc_SexLabel);
 		}
 		{
 			sexBox = new JComboBox();
-			sexBox.setModel(new DefaultComboBoxModel(new String[] {"", "Male", "Female", "Genderqueer/Non-Binary", "Prefer not to say"}));
+			sexBox.setModel(new DefaultComboBoxModel(
+					new String[] { "", "Male", "Female", "Genderqueer/Non-Binary", "Prefer not to say" }));
 			GridBagConstraints gbc_sexBox = new GridBagConstraints();
 			gbc_sexBox.insets = new Insets(0, 0, 5, 0);
 			gbc_sexBox.fill = GridBagConstraints.HORIZONTAL;
 			gbc_sexBox.gridx = 1;
-			gbc_sexBox.gridy = 8;
+			gbc_sexBox.gridy = 7;
 			contentPanel.add(sexBox, gbc_sexBox);
 		}
 		{
@@ -243,9 +223,37 @@ public class MenteeDialog extends JDialog {
 				saveButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 
-						savePerson();
-						AddressDialog ad= new AddressDialog(dbService);
-		                ad.setVisible(true);
+						Person p = new Person();
+						p.Fname = FNameField.getText();
+						p.Lname = LNameField.getText();
+						p.PhoneNumber = PhoneField.getText();
+						p.Email = dbService.getConnectedUserEmail();
+						p.Nationality = NationalityField.getText();
+						p.Race = (String) raceBox.getSelectedItem();
+						p.Ethnicity = EthnicityField.getText();
+						p.Sex = (String) sexBox.getSelectedItem();
+						p.LGBT = (String) LGBTBox.getSelectedItem();
+
+						// TODO: Add more checks for invalid input
+						try {
+							if (p.Fname.trim().length() > 0 && p.Lname.trim().length() > 0) {
+								// add mentee to the table
+								if (new MenteeAndMentorService(dbService).addMentee(p)) {
+									// create address input screen
+									AddressDialog ad = new AddressDialog(dbService);
+									ad.setVisible(true);
+									// get rid of the unfocused window
+									setVisible(false);
+									dispose();
+								}
+
+							} else {
+								JOptionPane.showMessageDialog(MenteeDialog.this,
+										"Did not enter in first name or last name", "Error", JOptionPane.ERROR_MESSAGE);
+							}
+						} catch (Exception ex) {
+							ex.printStackTrace();
+						}
 					}
 				});
 				saveButton.setFont(new Font("Tahoma", Font.PLAIN, 10));
@@ -268,35 +276,6 @@ public class MenteeDialog extends JDialog {
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
-		}
-	}
-
-	protected void savePerson() {
-		Person p = new Person();
-		p.Fname = FNameField.getText();
-		p.Lname = LNameField.getText();
-		p.PhoneNumber = PhoneField.getText();
-		p.Email = emailField.getText();
-		p.Nationality = NationalityField.getText();
-		p.Race = (String) raceBox.getSelectedItem(); 
-		p.Ethnicity = EthnicityField.getText();
-		p.Sex = (String) sexBox.getSelectedItem(); 
-		p.LGBT = (String) LGBTBox.getSelectedItem(); 
-		
-
-		// TODO: Add more checks for invalid input
-		try {
-
-			if (p.Fname.trim().length() > 0 && p.Lname.trim().length() > 0) {
-				new MenteeAndMentorService(dbService).addMentee(p); 
-			} else {
-				JOptionPane.showMessageDialog(MenteeDialog.this, "Did not enter in first name or last name", "Error",
-						JOptionPane.ERROR_MESSAGE);
-			}
-			setVisible(false);
-			dispose();
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 

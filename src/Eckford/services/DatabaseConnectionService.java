@@ -9,8 +9,8 @@ public class DatabaseConnectionService {
 		private final String SampleURL = "jdbc:sqlserver://${dbServer};databaseName=${dbName};user=${user};password= {${pass}}";
 
 		private Connection connection = null;
-		//TODO: Change this later
-		public String userEmail; 
+		//ONCE CONNECTED WE WANT TO KNOW THE USER EMAIL AND TRACK IT 
+		private String userEmail; 
 		private String databaseName;
 		private String serverName;
 
@@ -33,6 +33,13 @@ public class DatabaseConnectionService {
 
 		public Connection getConnection() {
 			return this.connection;
+		}
+		
+		public String getConnectedUserEmail() {
+			return userEmail;
+		}
+		public void setConnectedUserEmail(String userEmail) {
+			this.userEmail = userEmail; 
 		}
 
 		public void closeConnection() {

@@ -20,7 +20,6 @@ public class PersonService {
 		this.dbService = dbService;
 	}
 
-	//TODO add handling for address
 	public boolean addPerson(Person p) {
 		CallableStatement cs = null;
 		try {
@@ -40,9 +39,6 @@ public class PersonService {
 			if (result == 1) {
 				JOptionPane.showMessageDialog(null, "Person already Exists");
 				return false;
-			} else if (result == 2) {
-				JOptionPane.showMessageDialog(null, "There is already an address with this id");
-				return false;
 			}
 			return true;
 		} catch (SQLException e) {
@@ -52,7 +48,7 @@ public class PersonService {
 
 	}
 
-	//TODO add pattern matching in the query and stored proc for getting and searching
+	//TODO add pattern matching in the query for email
 	public ArrayList<Person> searchPerson(String email) {
 		String query = "call get_person(?)";
 		ArrayList<Person> people = new ArrayList<Person>();

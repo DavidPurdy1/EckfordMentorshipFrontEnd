@@ -10,7 +10,6 @@ import javax.swing.border.EmptyBorder;
 
 import Eckford.services.DatabaseConnectionService;
 import Eckford.services.MenteeAndMentorService;
-import Eckford.services.PersonService;
 import Tables.Person;
 
 import java.awt.GridBagLayout;
@@ -32,7 +31,6 @@ public class MentorDialog extends JDialog {
 	private JTextField FNameField;
 	private JTextField LNameField;
 	private JTextField PhoneField;
-	private JTextField emailField;
 	private JTextField NationalityField;
 	private JTextField EthnicityField;
 	private JComboBox raceBox; 
@@ -118,33 +116,13 @@ public class MentorDialog extends JDialog {
 			PhoneField.setColumns(10);
 		}
 		{
-			JLabel EmailLabel = new JLabel("Email");
-			EmailLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			GridBagConstraints gbc_EmailLabel = new GridBagConstraints();
-			gbc_EmailLabel.anchor = GridBagConstraints.EAST;
-			gbc_EmailLabel.insets = new Insets(0, 0, 5, 5);
-			gbc_EmailLabel.gridx = 0;
-			gbc_EmailLabel.gridy = 3;
-			contentPanel.add(EmailLabel, gbc_EmailLabel);
-		}
-		{
-			emailField = new JTextField();
-			GridBagConstraints gbc_emailField = new GridBagConstraints();
-			gbc_emailField.fill = GridBagConstraints.HORIZONTAL;
-			gbc_emailField.insets = new Insets(0, 0, 5, 0);
-			gbc_emailField.gridx = 1;
-			gbc_emailField.gridy = 3;
-			contentPanel.add(emailField, gbc_emailField);
-			emailField.setColumns(10);
-		}
-		{
 			JLabel RaceLabel = new JLabel("Race");
 			RaceLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			GridBagConstraints gbc_RaceLabel = new GridBagConstraints();
 			gbc_RaceLabel.anchor = GridBagConstraints.EAST;
 			gbc_RaceLabel.insets = new Insets(0, 0, 5, 5);
 			gbc_RaceLabel.gridx = 0;
-			gbc_RaceLabel.gridy = 4;
+			gbc_RaceLabel.gridy = 3;
 			contentPanel.add(RaceLabel, gbc_RaceLabel);
 		}
 		{
@@ -154,7 +132,7 @@ public class MentorDialog extends JDialog {
 			gbc_raceBox.insets = new Insets(0, 0, 5, 0);
 			gbc_raceBox.fill = GridBagConstraints.HORIZONTAL;
 			gbc_raceBox.gridx = 1;
-			gbc_raceBox.gridy = 4;
+			gbc_raceBox.gridy = 3;
 			contentPanel.add(raceBox, gbc_raceBox);
 		}
 		{
@@ -164,7 +142,7 @@ public class MentorDialog extends JDialog {
 			gbc_NationalityLabel.anchor = GridBagConstraints.EAST;
 			gbc_NationalityLabel.insets = new Insets(0, 0, 5, 5);
 			gbc_NationalityLabel.gridx = 0;
-			gbc_NationalityLabel.gridy = 5;
+			gbc_NationalityLabel.gridy = 4;
 			contentPanel.add(NationalityLabel, gbc_NationalityLabel);
 		}
 		{
@@ -173,7 +151,7 @@ public class MentorDialog extends JDialog {
 			gbc_NationalityField.insets = new Insets(0, 0, 5, 0);
 			gbc_NationalityField.fill = GridBagConstraints.HORIZONTAL;
 			gbc_NationalityField.gridx = 1;
-			gbc_NationalityField.gridy = 5;
+			gbc_NationalityField.gridy = 4;
 			contentPanel.add(NationalityField, gbc_NationalityField);
 			NationalityField.setColumns(10);
 		}
@@ -184,7 +162,7 @@ public class MentorDialog extends JDialog {
 			gbc_EthnicityLabel_1.anchor = GridBagConstraints.EAST;
 			gbc_EthnicityLabel_1.insets = new Insets(0, 0, 5, 5);
 			gbc_EthnicityLabel_1.gridx = 0;
-			gbc_EthnicityLabel_1.gridy = 6;
+			gbc_EthnicityLabel_1.gridy = 5;
 			contentPanel.add(EthnicityLabel_1, gbc_EthnicityLabel_1);
 		}
 		{
@@ -193,7 +171,7 @@ public class MentorDialog extends JDialog {
 			gbc_EthnicityField.insets = new Insets(0, 0, 5, 0);
 			gbc_EthnicityField.fill = GridBagConstraints.HORIZONTAL;
 			gbc_EthnicityField.gridx = 1;
-			gbc_EthnicityField.gridy = 6;
+			gbc_EthnicityField.gridy = 5;
 			contentPanel.add(EthnicityField, gbc_EthnicityField);
 			EthnicityField.setColumns(10);
 		}
@@ -204,7 +182,7 @@ public class MentorDialog extends JDialog {
 			gbc_LGBTLabel.anchor = GridBagConstraints.EAST;
 			gbc_LGBTLabel.insets = new Insets(0, 0, 5, 5);
 			gbc_LGBTLabel.gridx = 0;
-			gbc_LGBTLabel.gridy = 7;
+			gbc_LGBTLabel.gridy = 6;
 			contentPanel.add(LGBTLabel, gbc_LGBTLabel);
 		}
 		{
@@ -214,7 +192,7 @@ public class MentorDialog extends JDialog {
 			gbc_LGBTBox.insets = new Insets(0, 0, 5, 0);
 			gbc_LGBTBox.fill = GridBagConstraints.HORIZONTAL;
 			gbc_LGBTBox.gridx = 1;
-			gbc_LGBTBox.gridy = 7;
+			gbc_LGBTBox.gridy = 6;
 			contentPanel.add(LGBTBox, gbc_LGBTBox);
 		}
 		{
@@ -224,7 +202,7 @@ public class MentorDialog extends JDialog {
 			gbc_SexLabel.anchor = GridBagConstraints.EAST;
 			gbc_SexLabel.insets = new Insets(0, 0, 5, 5);
 			gbc_SexLabel.gridx = 0;
-			gbc_SexLabel.gridy = 8;
+			gbc_SexLabel.gridy = 7;
 			contentPanel.add(SexLabel, gbc_SexLabel);
 		}
 		{
@@ -234,7 +212,7 @@ public class MentorDialog extends JDialog {
 			gbc_sexBox.insets = new Insets(0, 0, 5, 0);
 			gbc_sexBox.fill = GridBagConstraints.HORIZONTAL;
 			gbc_sexBox.gridx = 1;
-			gbc_sexBox.gridy = 8;
+			gbc_sexBox.gridy = 7;
 			contentPanel.add(sexBox, gbc_sexBox);
 		}
 		{
@@ -244,7 +222,7 @@ public class MentorDialog extends JDialog {
 			gbc_posLabel.anchor = GridBagConstraints.EAST;
 			gbc_posLabel.insets = new Insets(0, 0, 5, 5);
 			gbc_posLabel.gridx = 0;
-			gbc_posLabel.gridy = 9;
+			gbc_posLabel.gridy = 8;
 			contentPanel.add(posLabel, gbc_posLabel);
 		}
 		{
@@ -253,7 +231,7 @@ public class MentorDialog extends JDialog {
 			gbc_posField.insets = new Insets(0, 0, 5, 0);
 			gbc_posField.fill = GridBagConstraints.HORIZONTAL;
 			gbc_posField.gridx = 1;
-			gbc_posField.gridy = 9;
+			gbc_posField.gridy = 8;
 			contentPanel.add(posField, gbc_posField);
 			posField.setColumns(10);
 		}
@@ -264,7 +242,7 @@ public class MentorDialog extends JDialog {
 			gbc_senLabel.anchor = GridBagConstraints.EAST;
 			gbc_senLabel.insets = new Insets(0, 0, 5, 5);
 			gbc_senLabel.gridx = 0;
-			gbc_senLabel.gridy = 10;
+			gbc_senLabel.gridy = 9;
 			contentPanel.add(senLabel, gbc_senLabel);
 		}
 		{
@@ -274,7 +252,7 @@ public class MentorDialog extends JDialog {
 			gbc_experienceBox.insets = new Insets(0, 0, 5, 0);
 			gbc_experienceBox.fill = GridBagConstraints.HORIZONTAL;
 			gbc_experienceBox.gridx = 1;
-			gbc_experienceBox.gridy = 10;
+			gbc_experienceBox.gridy = 9;
 			contentPanel.add(experienceBox, gbc_experienceBox);
 		}
 		{
@@ -284,7 +262,7 @@ public class MentorDialog extends JDialog {
 			gbc_FieldLabel.anchor = GridBagConstraints.EAST;
 			gbc_FieldLabel.insets = new Insets(0, 0, 5, 5);
 			gbc_FieldLabel.gridx = 0;
-			gbc_FieldLabel.gridy = 11;
+			gbc_FieldLabel.gridy = 10;
 			contentPanel.add(FieldLabel, gbc_FieldLabel);
 		}
 		{
@@ -294,7 +272,7 @@ public class MentorDialog extends JDialog {
 			gbc_fieldBox.insets = new Insets(0, 0, 5, 0);
 			gbc_fieldBox.fill = GridBagConstraints.HORIZONTAL;
 			gbc_fieldBox.gridx = 1;
-			gbc_fieldBox.gridy = 11;
+			gbc_fieldBox.gridy = 10;
 			contentPanel.add(fieldBox, gbc_fieldBox);
 		}
 		{
@@ -338,7 +316,7 @@ public class MentorDialog extends JDialog {
 		p.Fname = FNameField.getText();
 		p.Lname = LNameField.getText();
 		p.PhoneNumber = PhoneField.getText();
-		p.Email = emailField.getText();
+		p.Email = dbService.getConnectedUserEmail();
 		p.Nationality = NationalityField.getText();
 		p.Race = (String) raceBox.getSelectedItem(); 
 		p.Ethnicity = EthnicityField.getText();

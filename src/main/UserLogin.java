@@ -101,15 +101,25 @@ public class UserLogin extends JFrame {
 				//Verify that is a valid password and username in the database
 				if (user != null && user.trim().length() > 0 && pass != null && pass.trim().length() > 0) {
 					if (loginService.login(user, pass)) {
-						dbService.userEmail = user;
-						if(loginService.getRole(user).equals("Mentor")) {
+						
+						//once logged in get the track the user logged in and get their role
+						dbService.setConnectedUserEmail(user);
+						String role = loginService.getRole(user); 
+						
+						if(role.equals("Mentor")) {
 							//Launch Mentor UI 
 							MentorInterface ui = new MentorInterface(dbService); 
 							ui.setVisible(true);
+							
+						}else if(role.equals("Admin")){
+							//TODO: Implement admin screen for import and other admin operations
+							System.out.println("NOT IMPLEMENTED");
+							
 						}else {
 							//Launch Mentee Ui
 							MenteeInterface ui = new MenteeInterface(dbService);
 							ui.setVisible(true);
+							
 						}
 						setVisible(false);
 						dispose();

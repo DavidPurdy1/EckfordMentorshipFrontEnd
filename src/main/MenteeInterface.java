@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Eckford.services.DatabaseConnectionService;
-import Eckford.services.Import;
+import Eckford.services.ImportCSV;
 import Eckford.services.MenteeAndMentorService;
 import Eckford.services.PersonService;
 import Eckford.services.PreferenceService;
@@ -131,7 +131,7 @@ public class MenteeInterface extends JFrame {
 		ImportButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				Import is = new Import(dbService); 
+				ImportCSV is = new ImportCSV(dbService); 
 				is.setVisible(true);
 				
 			}

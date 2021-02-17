@@ -10,9 +10,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import Tables.Match;
-import Tables.Person;
 import Tables.Preference;
-import main.MenteeInterface;
 
 public class PreferenceService {
 	private DatabaseConnectionService dbService;
@@ -24,7 +22,7 @@ public class PreferenceService {
 	public boolean addPreference(Preference p) {
 		CallableStatement cs = null;
 		try {
-			cs = this.dbService.getConnection().prepareCall("{? = call insert_Preference(?, ?, ?, ?, ?, ?, ?, ?, ?)}");
+			cs = this.dbService.getConnection().prepareCall("{? = call insert_Preference(?, ?, ?, ?, ?, ?, ?, ?)}");
 			cs.setString(2, p.Sex);
 			cs.setString(3, p.LGBT);
 			cs.setString(4, p.Field);
@@ -32,17 +30,12 @@ public class PreferenceService {
 			cs.setInt(6, p.Seniority);
 			cs.setString(7, p.City);
 			cs.setString(8, p.State);
-			cs.setString(9, dbService.userEmail);
-			cs.registerOutParameter(10, Types.INTEGER);
+			cs.setString(9, dbService.getConnectedUserEmail());
 			cs.registerOutParameter(1, Types.INTEGER);
 			cs.execute();
-			preferenceID = cs.getInt(10);
-			int result = cs.getInt(1);
+			//int result = cs.getInt(1);
 			// TODO: Add error printing
-			if (result == 1) {
-				JOptionPane.showMessageDialog(null, "Preference already Exists");
-				return false;
-			}
+			
 			
 			return true;
 		} catch (SQLException e) {
@@ -59,7 +52,7 @@ public class PreferenceService {
 		PreparedStatement ps;
 		try {
 			ps = this.dbService.getConnection().prepareCall(query);
-			ps.setString(1, dbService.userEmail);
+			ps.setString(1, dbService.getConnectedUserEmail());
 			ResultSet rs = ps.executeQuery();
 			this.dbService.getConnection().commit();
 

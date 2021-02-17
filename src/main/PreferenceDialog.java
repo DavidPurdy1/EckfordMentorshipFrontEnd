@@ -260,7 +260,7 @@ public class PreferenceDialog extends JDialog {
 						p.Field = (String) fieldBox.getSelectedItem();
 						p.LGBT = LGBTField.getText();
 						// TODO: Fix this to be an integer value. Right now it only gets the first value of experience field
-						p.Seniority = Integer.parseInt((String) experienceBox.getSelectedItem(), 0);
+						p.Seniority = 1; 
 						p.Sex = (String) sexBox.getSelectedItem();
 						p.State = (String) stateBox.getSelectedItem();
 

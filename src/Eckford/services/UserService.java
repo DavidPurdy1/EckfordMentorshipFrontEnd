@@ -82,13 +82,12 @@ public class UserService {
 	public String getRole(String user) {
 		String query = "{call get_role(?)}";
 		try {
-			// returns the salt and hash from the user table
+			
 			PreparedStatement stmt = this.dbService.getConnection().prepareCall(query);
 			stmt.setString(1, user);
 			ResultSet rs = stmt.executeQuery();
 			this.dbService.getConnection().commit();
-			// checks if hashing the password entered using the salt retrieved equals the
-			// hash retrieved
+			//This is going to return the role from the result set if there is one
 			if (rs.next()) {
 				return rs.getString("Role"); 
 			}

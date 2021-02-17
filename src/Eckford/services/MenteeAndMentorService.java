@@ -17,7 +17,6 @@ public class MenteeAndMentorService {
 	}
 
 	public boolean addMentee(Person p) {
-
 		CallableStatement cs = null;
 		try {
 			cs = this.dbService.getConnection().prepareCall("{? = call insert_mentee(?, ?, ?, ?, ?, ?, ?, ?, ?)}");
@@ -34,10 +33,7 @@ public class MenteeAndMentorService {
 			cs.execute();
 			int result = cs.getInt(1);
 			if (result == 1) {
-				JOptionPane.showMessageDialog(null, "Person already Exists");
-				return false;
-			} else if (result == 2) {
-				JOptionPane.showMessageDialog(null, "There is already an address with this id");
+				JOptionPane.showMessageDialog(null, "Already added a mentee entry into the database with this email");
 				return false;
 			}
 			return true;
@@ -66,6 +62,12 @@ public class MenteeAndMentorService {
 			cs.setString(13, p.Ethnicity);
 			cs.registerOutParameter(1, Types.INTEGER);
 			cs.execute();
+			
+			int result = cs.getInt(1);
+			if (result == 1) {
+				JOptionPane.showMessageDialog(null, "Already added a mentor entry into the database with this email");
+				return false;
+			}
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
