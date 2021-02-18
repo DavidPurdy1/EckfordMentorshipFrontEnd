@@ -6,8 +6,11 @@ import java.awt.Font;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
 
 import javax.swing.JButton;
@@ -67,15 +70,56 @@ public class ImportCSV extends JFrame {
 					File file = fc.getSelectedFile();
 					fileName.insert(file.getName(), 0);
 					log.append("Opening: " + file.getName() + ".");
-
+					Scanner sc;
+					String line;
+					int index = 0;
 					try {
-						Scanner sc = new Scanner(file);
-						sc.useDelimiter(",");
-						while (sc.hasNext()) {
-							System.out.print(sc.next());
+						BufferedReader reader = new BufferedReader(new FileReader(file));
+						while ((line = reader.readLine()) != null) {
+							Person p = new Person();
+							sc = new Scanner(line);
+							sc.useDelimiter(",");
+							while (sc.hasNext()) {
+								String data = sc.next();
+								if (index == 0)
+									p.Fname = data;
+								else if (index == 1)
+									p.Lname = data;
+								else if (index == 2)
+									p.PhoneNumber = data;
+								else if (index == 3)
+									p.Email = data;
+								else if (index == 4)
+									p.Race = data;
+								else if (index == 5)
+									p.Nationality = data;
+								else if (index == 6)
+									p.Ethnicity = data;
+								else if (index == 7)
+									p.LGBT = data;
+								else if (index == 8)
+									p.Sex = data;
+								else if (index == 9)
+									p.Position = data;
+								else if (index == 10)
+									p.Seniority = data;
+								else if (index == 11)
+									p.Field = data;
+								else if (index == 12)
+									if(data.equals("Mentor")) new MenteeAndMentorService(dbService).addMentor(p);
+									else new MenteeAndMentorService(dbService).addMentee(p);
+								else
+									System.out.println("invalid data::" + data);
+								index++;
+							}
+							sc.close();
+							index = 0;
 						}
-						sc.close();
+						reader.close();
 					} catch (FileNotFoundException e1) {
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}

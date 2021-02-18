@@ -236,7 +236,9 @@ public class MenteeDialog extends JDialog {
 
 						// TODO: Add more checks for invalid input
 						try {
-							if (p.Fname.trim().length() > 0 && p.Lname.trim().length() > 0) {
+							if (p.Fname.trim().length() > 0 && p.Lname.trim().length() > 0
+								&& p.PhoneNumber.trim().length() == 7 || p.PhoneNumber.trim().length() == 10
+								&& p.Email.contains("@")) {
 								// add mentee to the table
 								if (new MenteeAndMentorService(dbService).addMentee(p)) {
 									// create address input screen
@@ -249,7 +251,7 @@ public class MenteeDialog extends JDialog {
 
 							} else {
 								JOptionPane.showMessageDialog(MenteeDialog.this,
-										"Did not enter in first name or last name", "Error", JOptionPane.ERROR_MESSAGE);
+										"Not a valid input, check for errors", "Error", JOptionPane.ERROR_MESSAGE);
 							}
 						} catch (Exception ex) {
 							ex.printStackTrace();
