@@ -2,6 +2,7 @@ package main;
 
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -34,6 +35,7 @@ public class MenteeInterface extends JFrame {
 	private JTable personTable;
 	private JTable addressTable;
 	private JTable preferenceTable;
+	private JLabel match;
 	PersonService pService;
 	Person p;
 

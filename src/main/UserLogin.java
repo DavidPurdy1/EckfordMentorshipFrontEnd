@@ -162,12 +162,13 @@ public class UserLogin extends JFrame {
 				}
 
 				// Runs register stored procedure
-				if (user != null && user.trim().length() > 0 && pass != null && pass.trim().length() > 0) {
+				if (user != null && user.trim().length() > 0 && pass != null && pass.trim().length() > 0
+						&& user.contains("@")) {
 					if (loginService.register(user, pass, mentorOrMentee)) {
-						JOptionPane.showMessageDialog(null, "Registration Successful !");
+						JOptionPane.showMessageDialog(null, "Registration Successful!");
 					}
 				} else
-					JOptionPane.showMessageDialog(null, "User or Password cannot be blank");
+					JOptionPane.showMessageDialog(null, "Invaild User Name or Password");
 			}
 		});
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
