@@ -230,9 +230,12 @@ public class CompanyDialog extends JDialog {
 						c.address.City = CityField.getText();
 
 						if (new MiscServices(dbService).addCompanyInfo(c)) {
-							
-						}else {
-							JOptionPane.showMessageDialog(CompanyDialog.this, "Error: " + e, "Error", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Insert Successful");
+							dispose();
+							setVisible(false);
+						} else {
+							JOptionPane.showMessageDialog(CompanyDialog.this, "Error:", "Error on company insert",
+									JOptionPane.ERROR_MESSAGE);
 						}
 					}
 				});

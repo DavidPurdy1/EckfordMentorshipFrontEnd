@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import Tables.Address;
 import Tables.Company;
-import Tables.Person;
 
 public class MiscServices {
 
@@ -42,7 +41,7 @@ public class MiscServices {
 	public boolean addCompanyInfo(Company c) {
 		CallableStatement cs = null;
 		try {
-			cs = this.dbService.getConnection().prepareCall("{? = call insert_address(?, ?, ?, ?, ?, ?, ?, ?, ?)}");
+			cs = this.dbService.getConnection().prepareCall("{? = call insert_worksfor_located_company_address(?, ?, ?, ?, ?, ?, ?, ?, ?)}");
 			cs.setString(2, c.CompanyName);
 			cs.setString(3, c.PhoneNumber);
 			cs.setString(4, c.Email);
