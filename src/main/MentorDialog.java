@@ -338,7 +338,7 @@ public class MentorDialog extends JDialog {
 			JOptionPane.showMessageDialog(MentorDialog.this,
 				"Invalid Name Length", "Error", JOptionPane.ERROR_MESSAGE);
 		}
-		else if(p.PhoneNumber.trim().length() != 7 || p.PhoneNumber.trim().length() != 10) {
+		else if(p.PhoneNumber.trim().length() != 7 && p.PhoneNumber.trim().length() != 10) {
 			JOptionPane.showMessageDialog(MentorDialog.this,
 				"Invalid Phone Number", "Error", JOptionPane.ERROR_MESSAGE);
 		}

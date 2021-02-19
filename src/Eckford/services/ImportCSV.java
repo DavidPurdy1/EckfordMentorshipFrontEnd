@@ -22,7 +22,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
+import Tables.Address;
 import Tables.Person;
+import Tables.Preference;
 
 public class ImportCSV extends JFrame {
 
@@ -32,6 +34,7 @@ public class ImportCSV extends JFrame {
 	JTextArea log;
 	PersonService pService;
 	Person p;
+	String role;
 
 	public ImportCSV(DatabaseConnectionService dbService) {
 		setTitle("Import Data");
@@ -77,6 +80,8 @@ public class ImportCSV extends JFrame {
 						BufferedReader reader = new BufferedReader(new FileReader(file));
 						while ((line = reader.readLine()) != null) {
 							Person p = new Person();
+							Address a = new Address();
+							Preference p2 = new Preference();
 							sc = new Scanner(line);
 							sc.useDelimiter(",");
 							while (sc.hasNext()) {
@@ -106,10 +111,46 @@ public class ImportCSV extends JFrame {
 								else if (index == 11)
 									p.Field = data;
 								else if (index == 12)
-									if(data.equals("Mentor")) new MenteeAndMentorService(dbService).addMentor(p);
-									else new MenteeAndMentorService(dbService).addMentee(p);
+									a.Address = data;
+								else if (index == 13)
+									a.Zip= data;
+								else if (index == 14)
+									a.UnitNumber = data;
+								else if (index == 15)
+									a.State = data;
+								else if (index == 16)
+									a.City = data;
+								else if (index == 17) {
+									role = data;
+									new MiscServices(dbService).addAddress(a);
+									if(data.equals("Mentor")) {
+										new MenteeAndMentorService(dbService).addMentor(p);
+									}
+									else {
+										new MenteeAndMentorService(dbService).addMentee(p);
+									}
+								}
 								else
 									System.out.println("invalid data::" + data);
+								if(role == "Mentee") {
+									if(index == 18)
+										p2.Sex = data;
+									else if(index == 19)
+										p2.LGBT = data;
+									else if(index == 20)
+										p2.Field = data;
+									else if(index == 21)
+										p2.City = data;
+									else if(index == 22)
+										p2.State = data;
+									else if(index == 23) {
+										p2.Seniority = data;
+										new PreferenceService(dbService).addPreference(p2);
+									}
+									else
+										System.out.println("invalid data::" + data);
+								}		
+								
 								index++;
 							}
 							sc.close();

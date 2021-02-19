@@ -39,6 +39,7 @@ public class MenteeInterface extends JFrame {
 	private JTable personTable;
 	private JTable addressTable;
 	private JTable preferenceTable;
+	private JLabel match;
 	PersonService pService;
 	Person p;
 
