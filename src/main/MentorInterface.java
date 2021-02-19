@@ -27,7 +27,7 @@ import Tables.PersonTableModel;
 import Tables.Preference;
 import Tables.PreferenceTableModel;
 
-public class MentorInterface extends JFrame{
+public class MentorInterface extends JFrame {
 
 	private JPanel contentPane;
 	private JTable personTable;
@@ -36,7 +36,7 @@ public class MentorInterface extends JFrame{
 	Person p;
 
 	public MentorInterface(DatabaseConnectionService dbService) {
-		
+
 		try {
 			pService = new PersonService(dbService);
 		} catch (Exception e) {
@@ -64,7 +64,6 @@ public class MentorInterface extends JFrame{
 		panel.add(scrollPane2);
 		panel.add(scrollPane3);
 
-
 		personTable = new JTable();
 		scrollPane.setViewportView(personTable);
 		addressTable = new JTable();
@@ -78,8 +77,6 @@ public class MentorInterface extends JFrame{
 				addressTable.setModel(new AddressTableModel(address));
 			}
 		}
-		
-		
 
 		JPanel buttonPanel = new JPanel();
 		contentPane.add(buttonPanel, BorderLayout.SOUTH);
