@@ -63,8 +63,10 @@ public class MenteeInterface extends JFrame {
 
 		// Adds user's information to front table
 		// System.out.println(dbService.getConnectedUserEmail());
-		ArrayList<Person> people = pService.searchPerson(dbService.getConnectedUserEmail());
-		table.setModel(new PersonTableModel(people));
+		if (pService.hasPerson(dbService.getConnectedUserEmail())) {
+			ArrayList<Person> people = pService.searchPerson(dbService.getConnectedUserEmail());
+			table.setModel(new PersonTableModel(people));
+		}
 
 		// TODO: IF THEY DO NOT EXIST IN THE MENTEE TABLE THEN IT WILL TRY TO FIND THE
 		// MATCHES RIGHT AT THE BEGINNING

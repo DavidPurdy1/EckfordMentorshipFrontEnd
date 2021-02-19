@@ -84,7 +84,7 @@ public class PersonService {
 
 	public ArrayList<Person> getAllPerson() {
 		ArrayList<Person> people = new ArrayList<Person>();
-		String query = "call all_person";
+		String query = "{call all_person}";
 		try (Statement stmt = dbService.getConnection().createStatement()) {
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
@@ -105,6 +105,23 @@ public class PersonService {
 			e.printStackTrace();
 		}
 		return people;
+	}
+	
+	public boolean hasPerson(String email) {
+		String query = "{call check_person(?)}";
+		PreparedStatement ps;
+		try {
+			ps = this.dbService.getConnection().prepareCall(query);
+			ps.setString(1, email);
+			ResultSet rs = ps.executeQuery();
+			this.dbService.getConnection().commit();
+			if(rs.next()) {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 }

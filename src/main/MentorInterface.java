@@ -22,7 +22,7 @@ import Eckford.services.PersonService;
 import Tables.Person;
 import Tables.PersonTableModel;
 
-public class MentorInterface extends JFrame{
+public class MentorInterface extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField LastNametextField;
@@ -31,7 +31,7 @@ public class MentorInterface extends JFrame{
 	Person p;
 
 	public MentorInterface(DatabaseConnectionService dbService) {
-		
+
 		try {
 			pService = new PersonService(dbService);
 		} catch (Exception e) {
@@ -52,15 +52,16 @@ public class MentorInterface extends JFrame{
 		contentPane.add(panel, BorderLayout.NORTH);
 
 		// Adds user's information to front table
-		ArrayList<Person> people = pService.searchPerson(dbService.getConnectedUserEmail());
-		table.setModel(new PersonTableModel(people));
 
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 
 		table = new JTable();
 		scrollPane.setViewportView(table);
-		table.setModel(new PersonTableModel(pService.getAllPerson()));
+		if (pService.hasPerson(dbService.getConnectedUserEmail())) {
+			ArrayList<Person> people = pService.searchPerson(dbService.getConnectedUserEmail());
+			table.setModel(new PersonTableModel(people));
+		}
 
 		JPanel buttonPanel = new JPanel();
 		contentPane.add(buttonPanel, BorderLayout.SOUTH);

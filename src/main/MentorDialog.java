@@ -33,11 +33,11 @@ public class MentorDialog extends JDialog {
 	private JTextField PhoneField;
 	private JTextField NationalityField;
 	private JTextField EthnicityField;
-	private JComboBox raceBox; 
-	private JComboBox experienceBox; 
-	private JComboBox fieldBox; 
-	private JComboBox sexBox; 
-	private JComboBox LGBTBox; 
+	private JComboBox raceBox;
+	private JComboBox experienceBox;
+	private JComboBox fieldBox;
+	private JComboBox sexBox;
+	private JComboBox LGBTBox;
 	private DatabaseConnectionService dbService;
 	private JTextField posField;
 
@@ -127,7 +127,9 @@ public class MentorDialog extends JDialog {
 		}
 		{
 			raceBox = new JComboBox();
-			raceBox.setModel(new DefaultComboBoxModel(new String[] {"", "American Indian or Alaskan Native", "Asian", "Black or African American", "Native Hawaiian or Other Pacific Islander", "White Hispanic", "White Non-Hispanic"}));
+			raceBox.setModel(new DefaultComboBoxModel(
+					new String[] { "", "American Indian or Alaskan Native", "Asian", "Black or African American",
+							"Native Hawaiian or Other Pacific Islander", "White Hispanic", "White Non-Hispanic" }));
 			GridBagConstraints gbc_raceBox = new GridBagConstraints();
 			gbc_raceBox.insets = new Insets(0, 0, 5, 0);
 			gbc_raceBox.fill = GridBagConstraints.HORIZONTAL;
@@ -187,7 +189,7 @@ public class MentorDialog extends JDialog {
 		}
 		{
 			LGBTBox = new JComboBox();
-			LGBTBox.setModel(new DefaultComboBoxModel(new String[] {"", "Yes", "No", "Prefer not to say"}));
+			LGBTBox.setModel(new DefaultComboBoxModel(new String[] { "", "Yes", "No", "Prefer not to say" }));
 			GridBagConstraints gbc_LGBTBox = new GridBagConstraints();
 			gbc_LGBTBox.insets = new Insets(0, 0, 5, 0);
 			gbc_LGBTBox.fill = GridBagConstraints.HORIZONTAL;
@@ -207,7 +209,8 @@ public class MentorDialog extends JDialog {
 		}
 		{
 			sexBox = new JComboBox();
-			sexBox.setModel(new DefaultComboBoxModel(new String[] {"", "Male", "Female", "Genderqueer/Non-Binary", "Prefer not to say"}));
+			sexBox.setModel(new DefaultComboBoxModel(
+					new String[] { "", "Male", "Female", "Genderqueer/Non-Binary", "Prefer not to say" }));
 			GridBagConstraints gbc_sexBox = new GridBagConstraints();
 			gbc_sexBox.insets = new Insets(0, 0, 5, 0);
 			gbc_sexBox.fill = GridBagConstraints.HORIZONTAL;
@@ -247,7 +250,8 @@ public class MentorDialog extends JDialog {
 		}
 		{
 			experienceBox = new JComboBox();
-			experienceBox.setModel(new DefaultComboBoxModel(new String[] {"", "0-1 years", "1-2 years", "3-4 years", "4-6 years", "6-10 years", "10+ years"}));
+			experienceBox.setModel(new DefaultComboBoxModel(new String[] { "", "0-1 years", "1-2 years", "3-4 years",
+					"4-6 years", "6-10 years", "10+ years" }));
 			GridBagConstraints gbc_experienceBox = new GridBagConstraints();
 			gbc_experienceBox.insets = new Insets(0, 0, 5, 0);
 			gbc_experienceBox.fill = GridBagConstraints.HORIZONTAL;
@@ -267,7 +271,10 @@ public class MentorDialog extends JDialog {
 		}
 		{
 			fieldBox = new JComboBox();
-			fieldBox.setModel(new DefaultComboBoxModel(new String[] {"", "Accounting", "Architecture and Civil Engineering", "Business, Management, and Administration", "Communications", "Computer and Electrical Engineering", "Computer Science and Software Engineering", "Health and Medicine", "Law and Public Policy", "Mechanical Engineering", "Math and Science"}));
+			fieldBox.setModel(new DefaultComboBoxModel(new String[] { "", "Accounting",
+					"Architecture and Civil Engineering", "Business, Management, and Administration", "Communications",
+					"Computer and Electrical Engineering", "Computer Science and Software Engineering",
+					"Health and Medicine", "Law and Public Policy", "Mechanical Engineering", "Math and Science" }));
 			GridBagConstraints gbc_fieldBox = new GridBagConstraints();
 			gbc_fieldBox.insets = new Insets(0, 0, 5, 0);
 			gbc_fieldBox.fill = GridBagConstraints.HORIZONTAL;
@@ -283,9 +290,10 @@ public class MentorDialog extends JDialog {
 				JButton saveButton = new JButton("Next");
 				saveButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						savePerson();
-						AddressDialog ad= new AddressDialog(dbService);
-		                ad.setVisible(true);
+						if (savePerson()) {
+							AddressDialog ad = new AddressDialog(dbService);
+							ad.setVisible(true);
+						}
 					}
 				});
 				saveButton.setFont(new Font("Tahoma", Font.PLAIN, 10));
@@ -311,34 +319,36 @@ public class MentorDialog extends JDialog {
 		}
 	}
 
-	protected void savePerson() {
+	private boolean savePerson() {
 		Person p = new Person();
 		p.Fname = FNameField.getText();
 		p.Lname = LNameField.getText();
 		p.PhoneNumber = PhoneField.getText();
 		p.Email = dbService.getConnectedUserEmail();
 		p.Nationality = NationalityField.getText();
-		p.Race = (String) raceBox.getSelectedItem(); 
+		p.Race = (String) raceBox.getSelectedItem();
 		p.Ethnicity = EthnicityField.getText();
-		p.Sex = (String) sexBox.getSelectedItem(); 
-		p.LGBT = (String) LGBTBox.getSelectedItem(); 
-		p.Seniority =(String)experienceBox.getSelectedItem();
-
+		p.Sex = (String) sexBox.getSelectedItem();
+		p.LGBT = (String) LGBTBox.getSelectedItem();
+		p.Seniority = (String) experienceBox.getSelectedItem();
+		p.Field = (String) fieldBox.getSelectedItem();
+		p.Position = posField.getText();
 		try {
 
-			if (p.Fname.trim().length() > 0 && p.Lname.trim().length() > 0
-				&& p.PhoneNumber.trim().length() == 7 || p.PhoneNumber.trim().length() == 10
-				&& p.Email.contains("@")) {
-				new MenteeAndMentorService(dbService).addMentor(p); 
+			if (p.Fname.trim().length() > 0 && p.Lname.trim().length() > 0 && p.PhoneNumber.trim().length() == 7
+					|| p.PhoneNumber.trim().length() == 10 && p.Email.contains("@")) {
+				new MenteeAndMentorService(dbService).addMentor(p);
+				setVisible(false);
+				dispose();
+				return true;
 			} else {
 				JOptionPane.showMessageDialog(MentorDialog.this, "Not a valid input, check for errors", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			}
-			setVisible(false);
-			dispose();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 }
