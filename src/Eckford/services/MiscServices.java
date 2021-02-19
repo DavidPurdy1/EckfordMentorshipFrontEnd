@@ -3,8 +3,10 @@ package Eckford.services;
 import java.sql.CallableStatement;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
 
 import Tables.Address;
+import Tables.Company;
 import Tables.Person;
 
 public class MiscServices {
@@ -33,6 +35,12 @@ public class MiscServices {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	public ArrayList<Company> getCompanies(){
+		
+		
+		return null;
 	}
 	
 	

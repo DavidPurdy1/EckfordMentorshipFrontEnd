@@ -54,19 +54,22 @@ public class MenteeInterface extends JFrame {
 		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		contentPane.add(panel, BorderLayout.NORTH);
-		
-		// Adds user's information to front table
-		System.out.println(dbService.getConnectedUserEmail());
-		ArrayList<Person> people = pService.searchPerson(dbService.getConnectedUserEmail());
-		//table.setModel(new PersonTableModel(people));
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 
 		table = new JTable();
 		scrollPane.setViewportView(table);
-		//TODO: IF THEY DO NOT EXIST IN THE MENTEE TABLE THEN IT WILL TRY TO FIND THE MATCHES RIGHT AT THE BEGINNING
-		//table.setModel(new MatchTableModel(new PreferenceService(dbService).findMatches()));
+
+		// Adds user's information to front table
+		// System.out.println(dbService.getConnectedUserEmail());
+		ArrayList<Person> people = pService.searchPerson(dbService.getConnectedUserEmail());
+		table.setModel(new PersonTableModel(people));
+
+		// TODO: IF THEY DO NOT EXIST IN THE MENTEE TABLE THEN IT WILL TRY TO FIND THE
+		// MATCHES RIGHT AT THE BEGINNING
+		// table.setModel(new MatchTableModel(new
+		// PreferenceService(dbService).findMatches()));
 
 		JPanel buttonPanel = new JPanel();
 		contentPane.add(buttonPanel, BorderLayout.SOUTH);
@@ -79,26 +82,26 @@ public class MenteeInterface extends JFrame {
 				addPerson.setVisible(true);
 			}
 		});
-		
+
 		JButton AddPreference = new JButton("Add Preference");
 		AddPreference.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		AddPreference.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PreferenceDialog pd = new PreferenceDialog(dbService); 
+				PreferenceDialog pd = new PreferenceDialog(dbService);
 				pd.setVisible(true);
 			}
 		});
-		
+
 		JButton FindMatchesButton = new JButton("Find Matches");
 		FindMatchesButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				PreferenceService ps = new PreferenceService(dbService); 
+
+				PreferenceService ps = new PreferenceService(dbService);
 				ps.findMatches();
 				System.out.println("found all matches");
 			}
 		});
-		
+
 		FindMatchesButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		buttonPanel.add(FindMatchesButton);
 		buttonPanel.add(AddPreference);

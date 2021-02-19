@@ -48,15 +48,19 @@ public class PersonService {
 
 	}
 
-	//TODO add pattern matching in the query for email
+	//TODO FEELS UNSAFE RIGHT NOW IF THE PERSON IS NOT IN THE TABLE WILL RETURN 1 NEED A CHECK FOR THAT 
 	public ArrayList<Person> searchPerson(String email) {
-		String query = "call get_person(?)";
+		String query = "{call get_person(?)}";
 		ArrayList<Person> people = new ArrayList<Person>();
 		try {
 			PreparedStatement ps = this.dbService.getConnection().prepareCall(query);
 			ps.setString(1, email);
+			
+			
 			ResultSet rs = ps.executeQuery();
 			this.dbService.getConnection().commit();
+			
+			
 			while (rs.next()) {
 				Person p = new Person();
 				p.Fname = rs.getString("Fname");
@@ -71,6 +75,7 @@ public class PersonService {
 				p.LGBT = rs.getString("LGBT");
 				people.add(p);
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

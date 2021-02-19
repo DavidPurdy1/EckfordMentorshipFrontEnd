@@ -14,7 +14,6 @@ import Tables.Preference;
 
 public class PreferenceService {
 	private DatabaseConnectionService dbService;
-	public Integer preferenceID; 
 	public PreferenceService(DatabaseConnectionService dbService) {
 		this.dbService = dbService;
 	}

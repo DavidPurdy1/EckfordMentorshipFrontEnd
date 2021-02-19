@@ -31,22 +31,7 @@ public class AddressDialog extends JDialog {
 	private JTextField unitField;
 	private JTextField cityField;
 	private JComboBox stateBox;
-	/**
-	 * Launch the application.
-	 */
-//	public static void main(String[] args) {
-//		try {
-//			AddressDialog dialog = new AddressDialog();
-//			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-//			dialog.setVisible(true);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
 
-	/**
-	 * Create the dialog.
-	 */
 	public AddressDialog(DatabaseConnectionService dbService) {
 		setTitle("Address");
 		setBounds(100, 100, 431, 317);
@@ -174,11 +159,15 @@ public class AddressDialog extends JDialog {
 						new MiscServices(dbService).addAddress(a);
 
 						// TODO: Add next page here and dispose of this page
-						// TODO: Add to person table here
-						
-						PreferenceDialog pd= new PreferenceDialog(dbService);
-		                pd.setVisible(true);
-						
+						if(dbService.getConnectedUserRole().equals("Mentee")) {
+							PreferenceDialog pd = new PreferenceDialog(dbService);
+							pd.setVisible(true);
+							
+						}else if(dbService.getConnectedUserRole().equals("Mentor")) {
+							CompanyDialog cd = new CompanyDialog(dbService); 
+							cd.setVisible(true);
+						}
+
 						dispose();
 						setVisible(false);
 					}

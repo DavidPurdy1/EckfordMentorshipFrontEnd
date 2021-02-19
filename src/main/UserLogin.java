@@ -29,8 +29,7 @@ public class UserLogin extends JFrame {
 	private JTextField UserNameField;
 	private JTextField PasswordField;
 	private UserService loginService;
-	
-	
+
 	/**
 	 * Create the frame.
 	 */
@@ -97,29 +96,32 @@ public class UserLogin extends JFrame {
 
 				String user = UserNameField.getText();
 				String pass = PasswordField.getText();
-				
-				//Verify that is a valid password and username in the database
+
+				// Verify that is a valid password and username in the database
 				if (user != null && user.trim().length() > 0 && pass != null && pass.trim().length() > 0) {
 					if (loginService.login(user, pass)) {
-						
-						//once logged in get the track the user logged in and get their role
-						dbService.setConnectedUserEmail(user);
-						String role = loginService.getRole(user); 
-						
-						if(role.equals("Mentor")) {
-							//Launch Mentor UI 
-							MentorInterface ui = new MentorInterface(dbService); 
+
+						// once logged in get the track the user logged in and get their role
+						String role = loginService.getRole(user);
+						dbService.setConnectedUserEmailRole(user, role);
+
+						if (role.equals("Mentor")) {
+							// Launch Mentor UI
+							MentorInterface ui = new MentorInterface(dbService);
 							ui.setVisible(true);
+
+						} else if (role.equals("Admin")) {
+							// TODO: Implement admin screen for import and other admin operations
+
+							// Admin can only be added to the database manually that way people using the
+							// front end can't set themselves as an admin
+							AdminInterface ai = new AdminInterface(dbService);
+							ai.setVisible(true);
 							
-						}else if(role.equals("Admin")){
-							//TODO: Implement admin screen for import and other admin operations
-							System.out.println("NOT IMPLEMENTED");
-							
-						}else {
-							//Launch Mentee Ui
+						} else if (role.equals("Mentee")) {
+							// Launch Mentee Ui
 							MenteeInterface ui = new MenteeInterface(dbService);
 							ui.setVisible(true);
-							
 						}
 						setVisible(false);
 						dispose();
@@ -152,14 +154,14 @@ public class UserLogin extends JFrame {
 				String pass = PasswordField.getText();
 				String mentorOrMentee = null;
 
-				//check whether or not it is a mentor or mentee
+				// check whether or not it is a mentor or mentee
 				if (chckbxNewCheckBox.isSelected()) {
 					mentorOrMentee = "Mentor";
 				} else {
 					mentorOrMentee = "Mentee";
 				}
-				
-				//Runs register stored procedure
+
+				// Runs register stored procedure
 				if (user != null && user.trim().length() > 0 && pass != null && pass.trim().length() > 0) {
 					if (loginService.register(user, pass, mentorOrMentee)) {
 						JOptionPane.showMessageDialog(null, "Registration Successful !");
