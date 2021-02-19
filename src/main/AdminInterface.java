@@ -10,6 +10,7 @@ import Eckford.services.ImportCSV;
 import Eckford.services.MenteeAndMentorService;
 import Eckford.services.PersonService;
 import Eckford.services.PreferenceService;
+import Tables.Match;
 import Tables.MatchTableModel;
 import Tables.Person;
 import Tables.PersonTableModel;
@@ -79,57 +80,44 @@ public class AdminInterface extends JFrame {
 					table.setModel(new PersonTableModel(people));
 
 				} catch (Exception ex) {
-					JOptionPane.showMessageDialog(AdminInterface.this, "Error: " + ex, "Error",
+					JOptionPane.showMessageDialog(AdminInterface.this, "Error: " + ex, "Searching failed",
 							JOptionPane.ERROR_MESSAGE);
 				}
-				
 
 			}
 		});
 		panel.add(btnNewButton);
-
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 
 		table = new JTable();
 		scrollPane.setViewportView(table);
-		//TODO: IF THEY DO NOT EXIST IN THE MENTEE TABLE THEN IT WILL TRY TO FIND THE MATCHES RIGHT AT THE BEGINNING
-		//table.setModel(new MatchTableModel(new PreferenceService(dbService).findMatches()));
+
+		JButton FindMatchesButton = new JButton("Find Matches");
+		panel.add(FindMatchesButton);
+		FindMatchesButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PreferenceService ps = new PreferenceService(dbService);
+				String Email = emailField.getText();
+				if (Email != null && Email.trim().length() > 0) {
+					ArrayList<Match> m = ps.findMatches(Email);
+					System.out.println("found all matches");
+					if (m.size() > 0) {
+						table.setModel(new MatchTableModel(m));
+					} else {
+						JOptionPane.showMessageDialog(AdminInterface.this, "Error: ",
+								"No matching mentors with preference", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			}
+		});
+
+		FindMatchesButton.setFont(new Font("Tahoma", Font.PLAIN, 10));
 
 		JPanel buttonPanel = new JPanel();
 		contentPane.add(buttonPanel, BorderLayout.SOUTH);
 
-		JButton AddPersonButton = new JButton("Add Person");
-		AddPersonButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		AddPersonButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				MenteeDialog addPerson = new MenteeDialog(dbService);
-				addPerson.setVisible(true);
-			}
-		});
-		
-		JButton AddPreference = new JButton("Add Preference");
-		AddPreference.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		AddPreference.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				PreferenceDialog pd = new PreferenceDialog(dbService); 
-				pd.setVisible(true);
-			}
-		});
-		
-		JButton FindMatchesButton = new JButton("Find Matches");
-		FindMatchesButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				PreferenceService ps = new PreferenceService(dbService); 
-				ps.findMatches();
-				System.out.println("found all matches");
-			}
-		});
-		
-		FindMatchesButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		buttonPanel.add(FindMatchesButton);
-		buttonPanel.add(AddPreference);
-		buttonPanel.add(AddPersonButton);
+		JButton Import = new JButton("Import");
+		buttonPanel.add(Import);
 	}
 }

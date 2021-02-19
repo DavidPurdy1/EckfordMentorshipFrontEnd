@@ -239,7 +239,7 @@ public class MenteeDialog extends JDialog {
 							JOptionPane.showMessageDialog(MenteeDialog.this,
 								"Invalid Name Length", "Error", JOptionPane.ERROR_MESSAGE);
 						}
-						else if(p.PhoneNumber.trim().length() != 7 || p.PhoneNumber.trim().length() != 10) {
+						else if(p.PhoneNumber.trim().length() != 7 && p.PhoneNumber.trim().length() != 10) {
 							JOptionPane.showMessageDialog(MenteeDialog.this,
 								"Invalid Phone Number", "Error", JOptionPane.ERROR_MESSAGE);
 						}

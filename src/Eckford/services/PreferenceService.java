@@ -42,7 +42,7 @@ public class PreferenceService {
 		return false;
 	}
 
-	public ArrayList<Match> findMatches() {
+	public ArrayList<Match> findMatches(String userEmail) {
 		// TODO: Use find matches sproc fix this it doesn't work
 		ArrayList<Match> matches = new ArrayList<Match>();
 		String query = "{call find_mentee_matches(?)}";
@@ -50,7 +50,7 @@ public class PreferenceService {
 		PreparedStatement ps;
 		try {
 			ps = this.dbService.getConnection().prepareCall(query);
-			ps.setString(1, dbService.getConnectedUserEmail());
+			ps.setString(1, userEmail);
 			ResultSet rs = ps.executeQuery();
 			this.dbService.getConnection().commit();
 
@@ -58,7 +58,6 @@ public class PreferenceService {
 				Match m = new Match(); 
 				m.Fname = rs.getString("Fname");
 				m.Lname = rs.getString("Lname"); 
-				System.out.println(m.Fname + " " + m.Lname);
 				matches.add(m); 
 			}
 			return matches; 

@@ -98,7 +98,8 @@ public class UserLogin extends JFrame {
 				String pass = PasswordField.getText();
 
 				// Verify that is a valid password and username in the database
-				if (user != null && user.trim().length() > 0 && pass != null && pass.trim().length() > 0) {
+				
+				if (user != null && user.trim().length() > 0 && pass != null && pass.trim().length() > 0 && user.contains("@")) {
 					if (loginService.login(user, pass)) {
 
 						// once logged in get the track the user logged in and get their role
@@ -111,7 +112,6 @@ public class UserLogin extends JFrame {
 							ui.setVisible(true);
 
 						} else if (role.equals("Admin")) {
-							// TODO: Implement admin screen for import and other admin operations
 
 							// Admin can only be added to the database manually that way people using the
 							// front end can't set themselves as an admin

@@ -69,15 +69,16 @@ public class MentorInterface extends JFrame {
 		addressTable = new JTable();
 		scrollPane2.setViewportView(addressTable);
 		
-		ArrayList<Person> people = pService.searchPerson(dbService.getConnectedUserEmail());
-		if(!people.isEmpty()) {
-			personTable.setModel(new PersonTableModel(people));
-			if(people.get(0).AddressID != null) {
-				ArrayList<Address> address = pService.findAddress(dbService.getConnectedUserEmail());
-				addressTable.setModel(new AddressTableModel(address));
+		if(pService.hasPerson(dbService.getConnectedUserEmail())) {			
+			ArrayList<Person> people = pService.searchPerson(dbService.getConnectedUserEmail());
+			if(!people.isEmpty()) {
+				personTable.setModel(new PersonTableModel(people));
+				if(people.get(0).AddressID != null) {
+					ArrayList<Address> address = pService.findAddress(dbService.getConnectedUserEmail());
+					addressTable.setModel(new AddressTableModel(address));
+				}
 			}
 		}
-
 		JPanel buttonPanel = new JPanel();
 		contentPane.add(buttonPanel, BorderLayout.SOUTH);
 

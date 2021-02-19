@@ -334,11 +334,12 @@ public class MentorDialog extends JDialog {
 		p.Field = (String) fieldBox.getSelectedItem();
 		p.Position = posField.getText();
 		
+		//System.out.println(p.PhoneNumber + " " + p.PhoneNumber.length() );
 		if(p.Fname.trim().length() == 0 || p.Lname.trim().length() == 0) {
 			JOptionPane.showMessageDialog(MentorDialog.this,
 				"Invalid Name Length", "Error", JOptionPane.ERROR_MESSAGE);
 		}
-		else if(p.PhoneNumber.trim().length() != 7 || p.PhoneNumber.trim().length() != 10) {
+		else if(p.PhoneNumber.trim().length() != 10 && p.PhoneNumber.trim().length() != 7 ) {
 			JOptionPane.showMessageDialog(MentorDialog.this,
 				"Invalid Phone Number", "Error", JOptionPane.ERROR_MESSAGE);
 		}

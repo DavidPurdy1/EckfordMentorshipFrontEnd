@@ -6,22 +6,17 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Eckford.services.DatabaseConnectionService;
-import Eckford.services.ImportCSV;
-import Eckford.services.MenteeAndMentorService;
 import Eckford.services.PersonService;
 import Eckford.services.PreferenceService;
 import Tables.Address;
 import Tables.AddressTableModel;
-import Tables.MatchTableModel;
 import Tables.Person;
 import Tables.PersonTableModel;
 import Tables.Preference;
 import Tables.PreferenceTableModel;
 
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import java.awt.FlowLayout;
 import java.awt.Font;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -61,15 +56,14 @@ public class MenteeInterface extends JFrame {
 		contentPane.add(panel, BorderLayout.CENTER);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBorder(BorderFactory.createTitledBorder ("Person Info"));
+		scrollPane.setBorder(BorderFactory.createTitledBorder("Person Info"));
 		JScrollPane scrollPane2 = new JScrollPane();
-		scrollPane2.setBorder(BorderFactory.createTitledBorder ("Address Info"));
+		scrollPane2.setBorder(BorderFactory.createTitledBorder("Address Info"));
 		JScrollPane scrollPane3 = new JScrollPane();
-		scrollPane3.setBorder(BorderFactory.createTitledBorder ("Preference Info"));
+		scrollPane3.setBorder(BorderFactory.createTitledBorder("Preference Info"));
 		panel.add(scrollPane);
 		panel.add(scrollPane2);
 		panel.add(scrollPane3);
-
 
 		personTable = new JTable();
 		scrollPane.setViewportView(personTable);
@@ -77,24 +71,22 @@ public class MenteeInterface extends JFrame {
 		scrollPane2.setViewportView(addressTable);
 		preferenceTable = new JTable();
 		scrollPane3.setViewportView(preferenceTable);
-		
-		ArrayList<Person> people = pService.searchPerson(dbService.getConnectedUserEmail());
-		ArrayList<Preference> preferences = pService.getPreference(dbService.getConnectedUserEmail());
-		if(!people.isEmpty()) {
-			personTable.setModel(new PersonTableModel(people));
-			if(people.get(0).AddressID != null) {
-				ArrayList<Address> address = pService.findAddress(dbService.getConnectedUserEmail());
-				addressTable.setModel(new AddressTableModel(address));
+
+		if (pService.hasPerson(dbService.getConnectedUserEmail())) {
+			ArrayList<Person> people = pService.searchPerson(dbService.getConnectedUserEmail());
+			ArrayList<Preference> preferences = pService.getPreference(dbService.getConnectedUserEmail());
+			if (!people.isEmpty()) {
+
+				personTable.setModel(new PersonTableModel(people));
+				if (people.get(0).AddressID != null) {
+					ArrayList<Address> address = pService.findAddress(dbService.getConnectedUserEmail());
+					addressTable.setModel(new AddressTableModel(address));
+				}
+				if (!preferences.isEmpty()) {
+					preferenceTable.setModel(new PreferenceTableModel(preferences));
+				}
 			}
-			if(!preferences.isEmpty()) {
-				preferenceTable.setModel(new PreferenceTableModel(preferences));
-			}
-			
 		}
-		// TODO: IF THEY DO NOT EXIST IN THE MENTEE TABLE THEN IT WILL TRY TO FIND THE
-		// MATCHES RIGHT AT THE BEGINNING
-		// table.setModel(new MatchTableModel(new3
-		// PreferenceService(dbService).findMatches()));
 
 		JPanel buttonPanel = new JPanel();
 		contentPane.add(buttonPanel, BorderLayout.SOUTH);
@@ -122,25 +114,25 @@ public class MenteeInterface extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				PreferenceService ps = new PreferenceService(dbService);
-				ps.findMatches();
+				ps.findMatches(dbService.getConnectedUserEmail());
 				System.out.println("found all matches");
 			}
 		});
 
 		FindMatchesButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
+
 		JButton refreshButton = new JButton("Refresh Table");
 		refreshButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<Person> people = pService.searchPerson(dbService.getConnectedUserEmail());
-				if(!people.isEmpty()) {
+				if (!people.isEmpty()) {
 					personTable.setModel(new PersonTableModel(people));
-					if(people.get(0).AddressID != null) {
+					if (people.get(0).AddressID != null) {
 						ArrayList<Address> address = pService.findAddress(dbService.getConnectedUserEmail());
 						addressTable.setModel(new AddressTableModel(address));
 					}
 					ArrayList<Preference> preferences = pService.getPreference(dbService.getConnectedUserEmail());
-					if(!preferences.isEmpty()) {
+					if (!preferences.isEmpty()) {
 						preferenceTable.setModel(new PreferenceTableModel(preferences));
 					}
 				}
