@@ -10,9 +10,13 @@ import Eckford.services.ImportCSV;
 import Eckford.services.MenteeAndMentorService;
 import Eckford.services.PersonService;
 import Eckford.services.PreferenceService;
+import Tables.Address;
+import Tables.AddressTableModel;
 import Tables.MatchTableModel;
 import Tables.Person;
 import Tables.PersonTableModel;
+import Tables.Preference;
+import Tables.PreferenceTableModel;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -21,6 +25,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -31,7 +36,9 @@ public class MenteeInterface extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField emailField;
-	private JTable table;
+	private JTable personTable;
+	private JTable addressTable;
+	private JTable preferenceTable;
 	PersonService pService;
 	Person p;
 
@@ -51,26 +58,42 @@ public class MenteeInterface extends JFrame {
 		setContentPane(contentPane);
 
 		JPanel panel = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
-		flowLayout.setAlignment(FlowLayout.LEFT);
-		contentPane.add(panel, BorderLayout.NORTH);
+		contentPane.add(panel, BorderLayout.CENTER);
 
 		JScrollPane scrollPane = new JScrollPane();
-		contentPane.add(scrollPane, BorderLayout.CENTER);
+		scrollPane.setBorder(BorderFactory.createTitledBorder ("Person Info"));
+		JScrollPane scrollPane2 = new JScrollPane();
+		scrollPane2.setBorder(BorderFactory.createTitledBorder ("Address Info"));
+		JScrollPane scrollPane3 = new JScrollPane();
+		scrollPane3.setBorder(BorderFactory.createTitledBorder ("Preference Info"));
+		panel.add(scrollPane);
+		panel.add(scrollPane2);
+		panel.add(scrollPane3);
 
-		table = new JTable();
-		scrollPane.setViewportView(table);
 
-		// Adds user's information to front table
-		// System.out.println(dbService.getConnectedUserEmail());
-		if (pService.hasPerson(dbService.getConnectedUserEmail())) {
-			ArrayList<Person> people = pService.searchPerson(dbService.getConnectedUserEmail());
-			table.setModel(new PersonTableModel(people));
+		personTable = new JTable();
+		scrollPane.setViewportView(personTable);
+		addressTable = new JTable();
+		scrollPane2.setViewportView(addressTable);
+		preferenceTable = new JTable();
+		scrollPane3.setViewportView(preferenceTable);
+		
+		ArrayList<Person> people = pService.searchPerson(dbService.getConnectedUserEmail());
+		ArrayList<Preference> preferences = pService.getPreference(dbService.getConnectedUserEmail());
+		if(!people.isEmpty()) {
+			personTable.setModel(new PersonTableModel(people));
+			if(people.get(0).AddressID != null) {
+				ArrayList<Address> address = pService.findAddress(dbService.getConnectedUserEmail());
+				addressTable.setModel(new AddressTableModel(address));
+			}
+			if(!preferences.isEmpty()) {
+				preferenceTable.setModel(new PreferenceTableModel(preferences));
+			}
+			
 		}
-
 		// TODO: IF THEY DO NOT EXIST IN THE MENTEE TABLE THEN IT WILL TRY TO FIND THE
 		// MATCHES RIGHT AT THE BEGINNING
-		// table.setModel(new MatchTableModel(new
+		// table.setModel(new MatchTableModel(new3
 		// PreferenceService(dbService).findMatches()));
 
 		JPanel buttonPanel = new JPanel();
@@ -105,8 +128,29 @@ public class MenteeInterface extends JFrame {
 		});
 
 		FindMatchesButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		JButton refreshButton = new JButton("Refresh Table");
+		refreshButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<Person> people = pService.searchPerson(dbService.getConnectedUserEmail());
+				if(!people.isEmpty()) {
+					personTable.setModel(new PersonTableModel(people));
+					if(people.get(0).AddressID != null) {
+						ArrayList<Address> address = pService.findAddress(dbService.getConnectedUserEmail());
+						addressTable.setModel(new AddressTableModel(address));
+					}
+					ArrayList<Preference> preferences = pService.getPreference(dbService.getConnectedUserEmail());
+					if(!preferences.isEmpty()) {
+						preferenceTable.setModel(new PreferenceTableModel(preferences));
+					}
+				}
+			}
+		});
+
+		FindMatchesButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		buttonPanel.add(FindMatchesButton);
 		buttonPanel.add(AddPreference);
 		buttonPanel.add(AddPersonButton);
+		buttonPanel.add(refreshButton);
 	}
 }

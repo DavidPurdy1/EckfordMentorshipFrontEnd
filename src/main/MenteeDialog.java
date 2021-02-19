@@ -234,27 +234,46 @@ public class MenteeDialog extends JDialog {
 						p.Sex = (String) sexBox.getSelectedItem();
 						p.LGBT = (String) LGBTBox.getSelectedItem();
 
-						// TODO: Add more checks for invalid input
-						try {
-							if (p.Fname.trim().length() > 0 && p.Lname.trim().length() > 0
-								&& p.PhoneNumber.trim().length() == 7 || p.PhoneNumber.trim().length() == 10
-								&& p.Email.contains("@")) {
-								// add mentee to the table
-								if (new MenteeAndMentorService(dbService).addMentee(p)) {
-									// create address input screen
-									AddressDialog ad = new AddressDialog(dbService);
-									ad.setVisible(true);
-									// get rid of the unfocused window
-									setVisible(false);
-									dispose();
-								}
-
-							} else {
-								JOptionPane.showMessageDialog(MenteeDialog.this,
-										"Not a valid input, check for errors", "Error", JOptionPane.ERROR_MESSAGE);
-							}
-						} catch (Exception ex) {
-							ex.printStackTrace();
+						// ERROR CHECKING 
+						if(p.Fname.trim().length() == 0 || p.Lname.trim().length() == 0) {
+							JOptionPane.showMessageDialog(MenteeDialog.this,
+								"Invalid Name Length", "Error", JOptionPane.ERROR_MESSAGE);
+						}
+						else if(p.PhoneNumber.trim().length() != 7 || p.PhoneNumber.trim().length() != 10) {
+							JOptionPane.showMessageDialog(MenteeDialog.this,
+								"Invalid Phone Number", "Error", JOptionPane.ERROR_MESSAGE);
+						}
+						else if (!p.Email.contains("@")) {
+							JOptionPane.showMessageDialog(MenteeDialog.this,
+								"Invalid Email Address", "Error", JOptionPane.ERROR_MESSAGE);
+						} 
+						else if (p.Nationality.trim().length() == 0) {
+							JOptionPane.showMessageDialog(MenteeDialog.this,
+									"Invalid Nationality", "Error", JOptionPane.ERROR_MESSAGE);
+						}
+						else if (p.Race.trim().length() == 0) {
+							JOptionPane.showMessageDialog(MenteeDialog.this,
+									"Invalid Race", "Error", JOptionPane.ERROR_MESSAGE);
+						}
+						else if (p.Ethnicity.trim().length() == 0) {
+							JOptionPane.showMessageDialog(MenteeDialog.this,
+									"Invalid Ethnicity", "Error", JOptionPane.ERROR_MESSAGE);
+						}
+						else if (p.Sex.trim().length() == 0) {
+							JOptionPane.showMessageDialog(MenteeDialog.this,
+									"Invalid Sex", "Error", JOptionPane.ERROR_MESSAGE);
+						}
+						else if (p.LGBT.trim().length() == 0) {
+							JOptionPane.showMessageDialog(MenteeDialog.this,
+									"Invalid LGBT Option", "Error", JOptionPane.ERROR_MESSAGE);
+						}
+						else if (new MenteeAndMentorService(dbService).addMentee(p)) {
+							// create address input screen
+							AddressDialog ad = new AddressDialog(dbService);
+							ad.setVisible(true);
+							// get rid of the unfocused window
+							setVisible(false);
+							dispose();
 						}
 					}
 				});

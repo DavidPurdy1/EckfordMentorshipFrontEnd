@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -19,14 +20,18 @@ import javax.swing.border.EmptyBorder;
 
 import Eckford.services.DatabaseConnectionService;
 import Eckford.services.PersonService;
+import Tables.Address;
+import Tables.AddressTableModel;
 import Tables.Person;
 import Tables.PersonTableModel;
+import Tables.Preference;
+import Tables.PreferenceTableModel;
 
 public class MentorInterface extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField LastNametextField;
-	private JTable table;
+	private JTable personTable;
+	private JTable addressTable;
 	PersonService pService;
 	Person p;
 
@@ -47,20 +52,30 @@ public class MentorInterface extends JFrame {
 		setContentPane(contentPane);
 
 		JPanel panel = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
-		flowLayout.setAlignment(FlowLayout.LEFT);
 		contentPane.add(panel, BorderLayout.NORTH);
 
-		// Adds user's information to front table
-
 		JScrollPane scrollPane = new JScrollPane();
-		contentPane.add(scrollPane, BorderLayout.CENTER);
+		scrollPane.setBorder(BorderFactory.createTitledBorder ("Person Info"));
+		JScrollPane scrollPane2 = new JScrollPane();
+		scrollPane2.setBorder(BorderFactory.createTitledBorder ("Address Info"));
+		JScrollPane scrollPane3 = new JScrollPane();
+		scrollPane3.setBorder(BorderFactory.createTitledBorder ("Preference Info"));
+		panel.add(scrollPane);
+		panel.add(scrollPane2);
+		panel.add(scrollPane3);
 
-		table = new JTable();
-		scrollPane.setViewportView(table);
-		if (pService.hasPerson(dbService.getConnectedUserEmail())) {
-			ArrayList<Person> people = pService.searchPerson(dbService.getConnectedUserEmail());
-			table.setModel(new PersonTableModel(people));
+		personTable = new JTable();
+		scrollPane.setViewportView(personTable);
+		addressTable = new JTable();
+		scrollPane2.setViewportView(addressTable);
+		
+		ArrayList<Person> people = pService.searchPerson(dbService.getConnectedUserEmail());
+		if(!people.isEmpty()) {
+			personTable.setModel(new PersonTableModel(people));
+			if(people.get(0).AddressID != null) {
+				ArrayList<Address> address = pService.findAddress(dbService.getConnectedUserEmail());
+				addressTable.setModel(new AddressTableModel(address));
+			}
 		}
 
 		JPanel buttonPanel = new JPanel();
@@ -73,7 +88,22 @@ public class MentorInterface extends JFrame {
 				addPerson.setVisible(true);
 			}
 		});
+		
+		JButton refreshButton = new JButton("Refresh Table");
+		refreshButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<Person> people = pService.searchPerson(dbService.getConnectedUserEmail());
+				if(!people.isEmpty()) {
+					personTable.setModel(new PersonTableModel(people));
+					if(people.get(0).AddressID != null) {
+						ArrayList<Address> address = pService.findAddress(dbService.getConnectedUserEmail());
+						addressTable.setModel(new AddressTableModel(address));
+					}
+				}
+			}
+		});
 		buttonPanel.add(AddPersonButton);
+		buttonPanel.add(refreshButton);
 
 	}
 
