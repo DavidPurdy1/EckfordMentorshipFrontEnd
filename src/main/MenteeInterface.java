@@ -54,40 +54,12 @@ public class MenteeInterface extends JFrame {
 		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		contentPane.add(panel, BorderLayout.NORTH);
-
-		JLabel lblNewLabel = new JLabel("Enter Email Address");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panel.add(lblNewLabel);
-
-		emailField = new JTextField();
-		panel.add(emailField);
-		emailField.setColumns(10);
-
-		JButton btnNewButton = new JButton("Search");
-		btnNewButton.addActionListener(new ActionListener() {
-
-			// This is for searching for items in the table
-			public void actionPerformed(ActionEvent e) {
-				try {
-					String Email = emailField.getText();
-					ArrayList<Person> people = null;
-					if (Email != null && Email.trim().length() > 0) {
-						people = pService.searchPerson(Email);
-					} else {
-						people = pService.getAllPerson();
-					}
-					table.setModel(new PersonTableModel(people));
-
-				} catch (Exception ex) {
-					JOptionPane.showMessageDialog(MenteeInterface.this, "Error: " + ex, "Error",
-							JOptionPane.ERROR_MESSAGE);
-				}
-				
-
-			}
-		});
-		panel.add(btnNewButton);
-
+		
+		// Adds user's information to front table
+		System.out.println(dbService.getConnectedUserEmail());
+		ArrayList<Person> people = pService.searchPerson(dbService.getConnectedUserEmail());
+		//table.setModel(new PersonTableModel(people));
+		
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 
