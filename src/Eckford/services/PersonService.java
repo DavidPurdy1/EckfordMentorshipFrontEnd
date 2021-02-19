@@ -10,7 +10,9 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import Tables.Address;
 import Tables.Person;
+import Tables.Preference;
 
 public class PersonService {
 
@@ -80,6 +82,61 @@ public class PersonService {
 			e.printStackTrace();
 		}
 		return people;
+	}
+	
+	public ArrayList<Address> findAddress(String email) {
+		String query = "{call get_address(?)}";
+		ArrayList<Address> address = new ArrayList<Address>();
+		try {
+			PreparedStatement ps = this.dbService.getConnection().prepareCall(query);
+			ps.setString(1, email);
+			
+			ResultSet rs = ps.executeQuery();
+			this.dbService.getConnection().commit();
+			
+			
+			while (rs.next()) {
+				Address a = new Address();
+				a.State = rs.getString("State");
+				a.City = rs.getString("City");
+				a.Address = rs.getString("StreetAddress");
+				a.UnitNumber = rs.getString("UnitNumber");
+				a.Zip = rs.getString("Zip");
+				address.add(a);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return address;
+	}
+	
+	public ArrayList<Preference> getPreference(String email) {
+		String query = "{call get_preference(?)}";
+		ArrayList<Preference> preferences = new ArrayList<Preference>();
+		try {
+			PreparedStatement ps = this.dbService.getConnection().prepareCall(query);
+			ps.setString(1, email);
+			
+			ResultSet rs = ps.executeQuery();
+			this.dbService.getConnection().commit();
+			
+			
+			while (rs.next()) {
+				Preference p = new Preference();
+				p.State = rs.getString("State");
+				p.City = rs.getString("City");
+				p.Field = rs.getString("Field");
+				p.Seniority = rs.getString("Seniority");
+				p.Sex = rs.getString("Sex");
+				p.LGBT = rs.getString("LGBT");
+				preferences.add(p);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return preferences;
 	}
 
 	public ArrayList<Person> getAllPerson() {

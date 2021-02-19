@@ -323,21 +323,46 @@ public class MentorDialog extends JDialog {
 		p.Sex = (String) sexBox.getSelectedItem(); 
 		p.LGBT = (String) LGBTBox.getSelectedItem(); 
 		p.Seniority =(String)experienceBox.getSelectedItem();
-
-		try {
-
-			if (p.Fname.trim().length() > 0 && p.Lname.trim().length() > 0
-				&& p.PhoneNumber.trim().length() == 7 || p.PhoneNumber.trim().length() == 10
-				&& p.Email.contains("@")) {
-				new MenteeAndMentorService(dbService).addMentor(p); 
-			} else {
-				JOptionPane.showMessageDialog(MentorDialog.this, "Not a valid input, check for errors", "Error",
-						JOptionPane.ERROR_MESSAGE);
-			}
+		
+		if(p.Fname.trim().length() == 0 || p.Lname.trim().length() == 0) {
+			JOptionPane.showMessageDialog(MentorDialog.this,
+				"Invalid Name Length", "Error", JOptionPane.ERROR_MESSAGE);
+		}
+		else if(p.PhoneNumber.trim().length() != 7 || p.PhoneNumber.trim().length() != 10) {
+			JOptionPane.showMessageDialog(MentorDialog.this,
+				"Invalid Phone Number", "Error", JOptionPane.ERROR_MESSAGE);
+		}
+		else if (!p.Email.contains("@")) {
+			JOptionPane.showMessageDialog(MentorDialog.this,
+				"Invalid Email Address", "Error", JOptionPane.ERROR_MESSAGE);
+		} 
+		else if (p.Nationality.trim().length() == 0) {
+			JOptionPane.showMessageDialog(MentorDialog.this,
+					"Invalid Nationality", "Error", JOptionPane.ERROR_MESSAGE);
+		}
+		else if (p.Race.trim().length() == 0) {
+			JOptionPane.showMessageDialog(MentorDialog.this,
+					"Invalid Race", "Error", JOptionPane.ERROR_MESSAGE);
+		}
+		else if (p.Ethnicity.trim().length() == 0) {
+			JOptionPane.showMessageDialog(MentorDialog.this,
+					"Invalid Ethnicity", "Error", JOptionPane.ERROR_MESSAGE);
+		}
+		else if (p.Sex.trim().length() == 0) {
+			JOptionPane.showMessageDialog(MentorDialog.this,
+					"Invalid Sex", "Error", JOptionPane.ERROR_MESSAGE);
+		}
+		else if (p.LGBT.trim().length() == 0) {
+			JOptionPane.showMessageDialog(MentorDialog.this,
+					"Invalid LGBT Option", "Error", JOptionPane.ERROR_MESSAGE);
+		}
+		else if(new MenteeAndMentorService(dbService).addMentor(p)) {
+			// create address input screen
+			AddressDialog ad = new AddressDialog(dbService);
+			ad.setVisible(true);
+			// get rid of the unfocused window
 			setVisible(false);
 			dispose();
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 

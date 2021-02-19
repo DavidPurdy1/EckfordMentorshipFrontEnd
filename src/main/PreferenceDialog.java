@@ -245,8 +245,6 @@ public class PreferenceDialog extends JDialog {
 						
 						Preference p = new Preference();
 						p.City = CityField.getText();
-						p.Nationality = NationalityField.getText();
-						p.Ethnicity = EthnicityField.getText();
 						p.Field = (String) fieldBox.getSelectedItem();
 						p.LGBT = (String) LGBTBox.getSelectedItem(); 
 						p.Seniority = (String) experienceBox.getSelectedItem(); 
